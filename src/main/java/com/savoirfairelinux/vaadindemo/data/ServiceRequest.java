@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mgubaidullin
  */
 @Entity
-@Table(name = "service_request", catalog = "demo", schema = "")
+@Table(name = "service_request", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ServiceRequest.findAll", query = "SELECT s FROM ServiceRequest s"),
@@ -50,6 +50,10 @@ public class ServiceRequest implements Serializable {
     @Size(max = 450)
     @Column(name = "title", length = 450)
     private String title;
+    @Size(max = 450)
+    @Column(name = "description", length = 450)
+    private String description;
+    
 
     public ServiceRequest() {
     }
@@ -97,6 +101,16 @@ public class ServiceRequest implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    
 
     @Override
     public int hashCode() {

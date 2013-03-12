@@ -3,7 +3,6 @@ package com.savoirfairelinux.vaadindemo;
 import com.savoirfairelinux.vaadindemo.data.ServiceRequest;
 import com.vaadin.cdi.Root;
 import com.vaadin.cdi.VaadinUI;
-//import com.vaadin.cdi.VaadinUI;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
@@ -56,6 +55,8 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
         layout.addComponent(table);
         layout.setExpandRatio(table, 1f);
         setContent(layout);
+        
+        refresh();
     }
 
     @Override
