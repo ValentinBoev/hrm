@@ -5,7 +5,7 @@
     <groupId>com.savoirfairelinux</groupId>
     <artifactId>hrm</artifactId>
     <packaging>war</packaging>
-    <version>1.0</version>
+    <version>1</version>
     <name>vaadindemo_ee</name>
 
     <properties>
