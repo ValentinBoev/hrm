@@ -1,4 +1,6 @@
 nb-configuration.xml
 target/
-src/main/
+src/main/webapp/
+.idea/
+hrm.iml
 
