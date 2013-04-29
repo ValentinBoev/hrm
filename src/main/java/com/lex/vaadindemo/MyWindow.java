@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.savoirfairelinux.vaadindemo;
+package com.lex.vaadindemo;
 
-import com.savoirfairelinux.vaadindemo.data.NewSessionBean;
-import com.savoirfairelinux.vaadindemo.data.ServiceRequest;
+import com.lex.vaadindemo.data.NewSessionBean;
+import com.lex.vaadindemo.data.ServiceRequest;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
