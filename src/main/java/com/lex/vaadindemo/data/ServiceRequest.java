@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.savoirfairelinux.vaadindemo.data;
+package com.lex.vaadindemo.data;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -134,7 +134,7 @@ public class ServiceRequest implements Serializable {
 
     @Override
     public String toString() {
-        return "com.savoirfairelinux.vaadindemo.data.ServiceRequest[ id=" + id + " ]";
+        return "com.lex.vaadindemo.data.ServiceRequest[ id=" + id + " ]";
     }
     
 }

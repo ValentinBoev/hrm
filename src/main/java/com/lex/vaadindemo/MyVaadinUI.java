@@ -1,6 +1,6 @@
-package com.savoirfairelinux.vaadindemo;
+package com.lex.vaadindemo;
 
-import com.savoirfairelinux.vaadindemo.data.ServiceRequest;
+import com.lex.vaadindemo.data.ServiceRequest;
 import com.vaadin.cdi.Root;
 import com.vaadin.cdi.VaadinUI;
 import com.vaadin.data.util.BeanItemContainer;

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.savoirfairelinux.vaadindemo.data;
+package com.lex.vaadindemo.data;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;

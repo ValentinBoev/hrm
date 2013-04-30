@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.savoirfairelinux.vaadindemo.data;
+package com.lex.vaadindemo.data;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Workers.findByPositionId", query = "SELECT w FROM Workers w WHERE w.positionId = :positionId"),
     @NamedQuery(name = "Workers.findByTitle", query = "SELECT w FROM Workers w WHERE w.title = :title"),
     @NamedQuery(name = "Workers.findByBaseSalary", query = "SELECT w FROM Workers w WHERE w.baseSalary = :baseSalary"),
-    @NamedQuery(name = "Workers.findByBonus", query = "SELECT w FROM Workers w WHERE w.bonus = :bonus")})
+    @NamedQuery(name = "Workers.findByBonus", query = "SELECT w FROM Workers w WHERE w.bonus = :bonus"),
+    @NamedQuery(name = "Workers.findByAge", query = "SELECT w FROM Workers w WHERE w.age = :age")})
 public class Workers implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -160,7 +161,7 @@ public class Workers implements Serializable {
 
     @Override
     public String toString() {
-        return "com.savoirfairelinux.vaadindemo.data.Workers[ id=" + id + " ]";
+        return "com.lex.vaadindemo.data.Workers[ id=" + id + " ]";
     }
     
 }
