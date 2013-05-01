@@ -42,16 +42,16 @@ public class Workers implements Serializable {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Size(max = 450)
-    @Column(name = "title", length = 450)
+    @Column(name = "job_code", length = 450)
     private String title;
     @Size(max = 450)
-    @Column(name = "first_name", length = 450)
+    @Column(name = "dept_code", length = 450)
     private String firstName;
     @Size(max = 450)
-    @Column(name = "last_name", length = 450)
+    @Column(name = "supervisor_id", length = 450)
     private String lastName;
     @Size(max = 450)
-    @Column(name = "position_id", length = 450)
+    @Column(name = "education_details", length = 450)
     private Integer positionId;
     @Size(max = 450)
     @Column(name = "base_salary", length = 450)
