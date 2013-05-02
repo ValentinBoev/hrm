@@ -45,6 +45,21 @@ public class ApplicationCv implements Serializable {
     @Column(name = "submit_date")
     @Temporal(TemporalType.DATE)
     private Date submitDate;
+    @Size(max = 128)
+    @Column(name = "applicant_name", length = 128)
+    private String applicantName;
+    @Size(max = 64)
+    @Column(name = "applicant_email", length = 64)
+    private String applicantEmail;
+    @Size(max = 64)
+    @Column(name = "applicant_phone", length = 64)
+    private String applicantPhone;
+    @Size(max = 64)
+    @Column(name = "applicant_city", length = 64)
+    private String applicantCity;
+    @Size(max = 64)
+    @Column(name = "applicant_country", length = 64)
+    private String applicantCountry;
 
         
     public ApplicationCv() {
@@ -84,6 +99,46 @@ public class ApplicationCv implements Serializable {
 
     public void setSubmitDate(Date submitDate) {
         this.submitDate = submitDate;
+    }
+
+    public String getApplicantName() {
+        return applicantName;
+    }
+
+    public void setApplicantName(String applicantName) {
+        this.applicantName = applicantName;
+    }
+
+    public String getApplicantEmail() {
+        return applicantEmail;
+    }
+
+    public void setApplicantEmail(String applicantEmail) {
+        this.applicantEmail = applicantEmail;
+    }
+
+    public String getApplicantPhone() {
+        return applicantPhone;
+    }
+
+    public void setApplicantPhone(String applicantPhone) {
+        this.applicantPhone = applicantPhone;
+    }
+
+    public String getApplicantCity() {
+        return applicantCity;
+    }
+
+    public void setApplicantCity(String applicantCity) {
+        this.applicantCity = applicantCity;
+    }
+
+    public String getApplicantCountry() {
+        return applicantCountry;
+    }
+
+    public void setApplicantCountry(String applicantCountry) {
+        this.applicantCountry = applicantCountry;
     }
 
     

@@ -24,11 +24,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "emp_course", catalog = "hrm", schema = "hrm")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Empcourse.findAll", query = "SELECT ec FROM Empcourse ec"),
-    @NamedQuery(name = "Empcourse.findById", query = "SELECT ec FROM Empcourse ec WHERE ec.id = :id"),
-    @NamedQuery(name = "Empcourse.findByEmpId", query = "SELECT ec FROM Empcourse ec WHERE ec.empId = :empId"),
-    @NamedQuery(name = "Empcourse.findByCourseId", query = "SELECT ec FROM Empcourse ec WHERE ec.courseId = :courseId")})
-public class Empcourse implements Serializable {
+    @NamedQuery(name = "EmpCourse.findAll", query = "SELECT ec FROM EmpCourse ec"),
+    @NamedQuery(name = "EmpCourse.findById", query = "SELECT ec FROM EmpCourse ec WHERE ec.id = :id"),
+    @NamedQuery(name = "EmpCourse.findByEmpId", query = "SELECT ec FROM EmpCourse ec WHERE ec.empId = :empId"),
+    @NamedQuery(name = "EmpCourse.findByCourseId", query = "SELECT ec FROM EmpCourse ec WHERE ec.courseId = :courseId")})
+public class EmpCourse implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +41,10 @@ public class Empcourse implements Serializable {
     private Integer courseId;   
     
 
-    public Empcourse() {
+    public EmpCourse() {
     }
 
-    public Empcourse(Integer id) {
+    public EmpCourse(Integer id) {
         this.id = id;
     }
 
@@ -83,10 +83,10 @@ public class Empcourse implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Empcourse)) {
+        if (!(object instanceof EmpCourse)) {
             return false;
         }
-        Empcourse other = (Empcourse) object;
+        EmpCourse other = (EmpCourse) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
