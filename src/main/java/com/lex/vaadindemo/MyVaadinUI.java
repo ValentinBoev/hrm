@@ -5,13 +5,21 @@ import com.vaadin.cdi.Root;
 import com.vaadin.cdi.VaadinUI;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
+import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -50,6 +58,9 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
     private Button removeContactButton = new Button("Remove this contact");
     private FormLayout editorLayout = new FormLayout();
     private FieldGroup editorFields = new FieldGroup();
+    
+    Accordion sample;
+    Accordion sample1;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -61,45 +72,89 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
     * visual editor, CSS or HTML templates for layout instead.
     */
     private void initLayout() {
+        VerticalLayout hl = new VerticalLayout();
+        setContent(hl);
+        
+        Link link;
+        sample1 = new Accordion();
+        sample1.setHeight("80%");
+        sample1.setWidth("200px");
 
-        /* Root of the user interface component tree is set */
-        HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
-        setContent(splitPanel);
-
-        /* Build the component tree */
-        VerticalLayout leftLayout = new VerticalLayout();
-        splitPanel.addComponent(leftLayout);
-        splitPanel.addComponent(editorLayout);
-        leftLayout.addComponent(contactList);
-        HorizontalLayout bottomLeftLayout = new HorizontalLayout();
-        leftLayout.addComponent(bottomLeftLayout);
-        bottomLeftLayout.addComponent(searchField);
-        bottomLeftLayout.addComponent(addNewContactButton);
-
-        /* Set the contents in the left of the split panel to use all the space */
-        leftLayout.setSizeFull();
-
-        /*
-         * On the left side, expand the size of the contactList so that it uses
-         * all the space left after from bottomLeftLayout
-         */
-        leftLayout.setExpandRatio(contactList, 1);
-        contactList.setSizeFull();
-
-        /*
-         * In the bottomLeftLayout, searchField takes all the width there is
-         * after adding addNewContactButton. The height of the layout is defined
-         * by the tallest component.
-         */
-        bottomLeftLayout.setWidth("100%");
-        searchField.setWidth("100%");
-        bottomLeftLayout.setExpandRatio(searchField, 1);
-
-        /* Put a little margin around the fields in the right side editor */
-        editorLayout.setMargin(true);
-        editorLayout.setVisible(false);
+        for (int i = 1; i < 8; i++) {
+            sample1.addTab(menu1(), "Tab " + i);
+        }
+        hl.addComponent(sample1);
+        hl.addStyleName("outlined");
+        
+        link = new Link("Google search", new ExternalResource("http://www.google.com"));
+        link.setDescription("Visit google.com");
+        link.setStyleName("button");
+        
+        NativeButton nb;
+        
+        nb = new NativeButton("Click");
+        nb.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                Notification.show("The button was clicked",
+                        Type.TRAY_NOTIFICATION);
+            }
+        });
+        hl.addComponent(nb);
+        hl.addComponent(link);
+        hl.addComponent(menu1());
     }
-	
+    
+    private VerticalLayout menu1 () {
+        // Normal buttons (more themable)
+        VerticalLayout buttons = new VerticalLayout();
+        buttons.setSpacing(true);
+        MarginInfo marginInfo = new MarginInfo(false, true, false, false);
+        buttons.setMargin(marginInfo);
+
+        buttons.addComponent(new Label("<h3>Normal buttons</h3>",
+                Label.CONTENT_XHTML));
+
+        // Button w/ text and tooltip
+        Button b = new Button("Caption");
+        b.setDescription("Some Desc");
+        buttons.addComponent(b);
+
+        // Button w/ HTML text
+        b = new Button("HTML Caption");
+        b.setHtmlContentAllowed(true);
+        b.setDescription("Some Desc");
+        buttons.addComponent(b);
+
+        // Button w/ text, icon and tooltip
+        b = new Button("Yet Caption");
+        b.setDescription("Some Desc");
+        buttons.addComponent(b);
+
+        // Button w/ icon and tooltip
+        b = new Button("Yet Another Caption");
+        b.setDescription("Some Desc");
+        buttons.addComponent(b);
+        
+        return buttons;
+
+    }
+    
+    public String getLorem () {
+        String lorem = new String();
+        
+        lorem = "Ctum id, lacinia sit amet, elementum posuere, ipsum. "
+                + "Integer luctus dictum libero. Pellentesque sed pede "
+                + "sed nisl bibendum porttitor. Phasellus tempor "
+                + "interdum nisi. Mauris nec magna. Phasellus massa "
+                + "pede, vehicula sed, ornare at, ullamcorper ut, nisl. "
+                + "Sed turpis nisl, hendrerit sit amet, consequat id, "
+                + "auctor nec, arcu. Quisque fringilla tincidunt massa. "
+                + "In eleifend, nulla sed mollis vestibulum, mauris orci "
+                + "facilisis ante, id pharetra dolor ipsum vitae sem. Integer dictum. ";
+        return lorem;
+        
+    }
 
     @Override
     public void buttonClick(ClickEvent event) {
