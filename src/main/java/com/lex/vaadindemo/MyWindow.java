@@ -64,7 +64,7 @@ public class MyWindow extends Window implements Button.ClickListener {
         try {
             fieldGroup.commit();
             ServiceRequest serviceRequest = fieldGroup.getItemDataSource().getBean();
-            bean.saveData(serviceRequest);
+//            bean.saveData(serviceRequest);
             this.close();
         } catch (CommitException ex) {
             ex.printStackTrace();

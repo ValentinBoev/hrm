@@ -20,7 +20,7 @@ public class NewSessionBean {
     @PersistenceContext(unitName = "demoPU")
     EntityManager entityManager;
 
-    public void saveData(ServiceRequest data) {
+    public void saveData(Department data) {
         entityManager.merge(data);
     }
     // Add business logic below. (Right-click in editor and choose
