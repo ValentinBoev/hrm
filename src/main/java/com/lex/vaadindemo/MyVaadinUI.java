@@ -58,10 +58,11 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
     private Button removeContactButton = new Button("Remove this contact");
     private FormLayout editorLayout = new FormLayout();
     private FieldGroup editorFields = new FieldGroup();
+    private VerticalLayout vl = new VerticalLayout();
     
     Accordion sample;
     Accordion sample1;
-
+    
     @Override
     protected void init(VaadinRequest request) {
         initLayout();
@@ -84,6 +85,7 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
             sample1.addTab(menu1(), "Tab " + i);
         }
         hl.addComponent(sample1);
+        hl.addComponent(vl);
         hl.addStyleName("outlined");
         
         link = new Link("Google search", new ExternalResource("http://www.google.com"));
@@ -103,6 +105,12 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
         hl.addComponent(nb);
         hl.addComponent(link);
         hl.addComponent(menu1());
+        
+        GeneratedColumnExample columnExample = new GeneratedColumnExample();
+        columnExample.init(getLorem());
+        
+        hl.addComponent(columnExample);
+        
     }
     
     private VerticalLayout menu1 () {
@@ -124,6 +132,20 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
         b = new Button("HTML Caption");
         b.setHtmlContentAllowed(true);
         b.setDescription("Some Desc");
+        b.addClickListener(new ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                table.setContainerDataSource(data);
+                table.setSizeFull();
+                table.setSelectable(true);
+                table.setMultiSelect(false);
+                table.setVisibleColumns(new String[]{"firstName", "lastName", "title"});
+                table.setColumnHeaders(new String[]{"First name", "Last name", "Title"});
+
+                vl.addComponent(table);
+            }
+        });
         buttons.addComponent(b);
 
         // Button w/ text, icon and tooltip
