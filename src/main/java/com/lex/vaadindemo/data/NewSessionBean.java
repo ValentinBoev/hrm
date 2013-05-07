@@ -5,6 +5,7 @@
 package com.lex.vaadindemo.data;
 
 import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,18 +14,17 @@ import javax.persistence.PersistenceContext;
  *
  * @author mgubaidullin
  */
-@Stateless
+@Stateful
 @LocalBean
 public class NewSessionBean {
 
     @PersistenceContext(unitName = "demoPU")
-    EntityManager entityManager;
+    protected EntityManager entityManager;
 
     public void saveData(Department data) {
-        entityManager.persist(data);
-        System.out.println(data);
+//        entityManager.persist(data);
         System.out.println(entityManager);
-//        entityManager.merge(data);
+        entityManager.merge(data);
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

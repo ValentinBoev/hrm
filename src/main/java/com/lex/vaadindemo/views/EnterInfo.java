@@ -17,11 +17,13 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Named;
 
 /**
  *
  * @author valik
  */
+@Named("enterinfo")
 public class EnterInfo extends VerticalLayout implements Button.ClickListener {
     @EJB
     NewSessionBean bean;
@@ -73,7 +75,7 @@ public class EnterInfo extends VerticalLayout implements Button.ClickListener {
             Department department = departmentGroup.getItemDataSource().getBean();
             
             
-            Notification.show("Button clicked" + department.getDeptName());
+            Notification.show("Button clicked" + department.getDeptDesc());
             System.out.println(department);
             bean.saveData(department);
             
