@@ -12,6 +12,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -20,7 +21,7 @@ import javax.persistence.PersistenceContext;
  * @author valik
  */
 @VaadinView("demo")
-
+@Named("mainView")
 public class MainView extends VerticalLayout implements Button.ClickListener {
     
     VerticalLayout mainMenu;
@@ -37,6 +38,10 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     
     @Inject
     EnterInfo enterInfo;
+    @Inject
+    UserListView userListView;
+    @PersistenceContext(unitName = "demoPU")
+    EntityManager entityManager;
     
     
     public void initUI () {
@@ -69,7 +74,9 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
         mainMenu.addComponent(accordion);
                 
         contentArea = new Panel();
-        contentArea.setContent(new Button("Hello, i'm Panel"));
+        userListView = new UserListView();
+        contentArea.setContent(userListView);
+        userListView.init();
         contentArea.setSizeFull();
     }
     

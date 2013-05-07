@@ -1,6 +1,7 @@
 package com.lex.vaadindemo;
 
 import com.lex.vaadindemo.views.MainView;
+import com.lex.vaadindemo.views.UserListView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.cdi.Root;
 import com.vaadin.cdi.VaadinUI;
@@ -25,12 +26,13 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
     
     @Inject
     MainView mainView;
+    @Inject
+    UserListView userListView;
     @PersistenceContext(unitName = "demoPU")
     EntityManager entityManager;
     
     @Override
     protected void init(VaadinRequest request) {
-        System.out.println(entityManager);
         mainView = new MainView();
         setContent(mainView);
         setSizeFull();
