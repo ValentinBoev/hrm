@@ -65,6 +65,7 @@ public class UserListView extends VerticalLayout {
         userLayout.setMargin(true);
         
         FormLayout formLayout = new FormLayout();
+        formLayout.s
         
         userData = new Table();
         userData.setContainerDataSource(data);
