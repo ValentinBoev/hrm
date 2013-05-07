@@ -21,7 +21,10 @@ public class NewSessionBean {
     EntityManager entityManager;
 
     public void saveData(Department data) {
-        entityManager.merge(data);
+        entityManager.persist(data);
+        System.out.println(data);
+        System.out.println(entityManager);
+//        entityManager.merge(data);
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

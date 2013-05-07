@@ -115,7 +115,7 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lex.vaadindemo.data.Employee[ id=" + id + " ]";
+        return "com.lex.vaadindemo.data.Department[ id=" + id + " deptName=" + deptName + " deptDesc=" + deptDesc + " deptLocation=" + deptLocation + " ]";
     }
     
 }

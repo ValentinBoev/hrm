@@ -4,26 +4,32 @@
  */
 package com.lex.vaadindemo.views;
 
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.cdi.VaadinView;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+import javax.inject.Inject;
 
 /**
  *
  * @author valik
  */
+@VaadinView("demo")
+
 public class MainView extends VerticalLayout implements Button.ClickListener {
+    
+    
     
     VerticalLayout mainMenu;
     Panel contentArea;
     Accordion accordion;
     private Button btn1;
     private Button btn2;
+    
+    @Inject
     EnterInfo enterInfo;
     
     public void initUI () {

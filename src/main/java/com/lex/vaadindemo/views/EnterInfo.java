@@ -17,9 +17,6 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -41,14 +38,14 @@ public class EnterInfo extends VerticalLayout implements Button.ClickListener {
     public void init() {
         bean = new NewSessionBean();
         
-        getFields();
+        prepareFields();
         prepareButtons();
         departmentGroup.setItemDataSource(new BeanItem<Department>(new Department()));
     }
     
     
     
-    private void getFields() {
+    private void prepareFields() {
         deptName = new TextField("Department Name:");
         deptDesc = new TextArea("Department Description:");
         deptLocation = new TextField("Department Location:");
@@ -77,6 +74,7 @@ public class EnterInfo extends VerticalLayout implements Button.ClickListener {
             
             
             Notification.show("Button clicked" + department.getDeptName());
+            System.out.println(department);
             bean.saveData(department);
             
         } catch (FieldGroup.CommitException ex) {
