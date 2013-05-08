@@ -1,7 +1,7 @@
 package com.lex.vaadindemo;
 
+import com.lex.vaadindemo.data.NewSessionBean;
 import com.lex.vaadindemo.views.MainView;
-import com.lex.vaadindemo.views.UserListView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.cdi.Root;
 import com.vaadin.cdi.VaadinUI;
@@ -11,9 +11,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.EJB;
 
 /**
  * The Application's "main" class
@@ -23,13 +21,14 @@ import javax.persistence.PersistenceContext;
 @Root
 @Theme("runo")
 public class MyVaadinUI extends UI implements ClickListener, CloseListener {
-    
-    @Inject
+
+
+    @EJB
+    NewSessionBean bean;
+
     MainView mainView;
-    @Inject
-    UserListView userListView;
-    @PersistenceContext(unitName = "demoPU")
-    EntityManager entityManager;
+//    @Inject
+//    UserListView userListView;
     
     @Override
     protected void init(VaadinRequest request) {
@@ -37,7 +36,7 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
         setContent(mainView);
         setSizeFull();
         mainView.initUI();
-        
+        System.out.println(bean);
         mainView.setSizeFull();
     }
 
@@ -49,6 +48,10 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
     @Override
     public void windowClose(CloseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public NewSessionBean getSessionBean() {
+        return bean;
     }
     
     

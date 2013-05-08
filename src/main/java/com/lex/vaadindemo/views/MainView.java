@@ -36,12 +36,7 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     private Button basicBtn1;
     private Button basicBtn2;
     
-    @Inject
     EnterInfo enterInfo;
-    @Inject
-    UserListView userListView;
-    @PersistenceContext(unitName = "demoPU")
-    EntityManager entityManager;
     
     
     public void initUI () {
@@ -74,9 +69,9 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
         mainMenu.addComponent(accordion);
                 
         contentArea = new Panel();
-        userListView = new UserListView();
-        contentArea.setContent(userListView);
-        userListView.init();
+//        userListView = new UserListView();
+//        contentArea.setContent(userListView);
+//        userListView.init();
         contentArea.setSizeFull();
     }
     
