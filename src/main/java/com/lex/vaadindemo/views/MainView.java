@@ -36,12 +36,13 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     private Button basicBtn1;
     private Button basicBtn2;
     
+    @PersistenceContext(unitName = "demoPU")
+    EntityManager entityManager;
     @Inject
     EnterInfo enterInfo;
     @Inject
     UserListView userListView;
-    @PersistenceContext(unitName = "demoPU")
-    EntityManager entityManager;
+    
     
     
     public void initUI () {

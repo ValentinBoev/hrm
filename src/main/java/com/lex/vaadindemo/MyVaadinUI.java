@@ -24,12 +24,11 @@ import javax.persistence.PersistenceContext;
 @Theme("runo")
 public class MyVaadinUI extends UI implements ClickListener, CloseListener {
     
-    @Inject
-    MainView mainView;
-    @Inject
-    UserListView userListView;
     @PersistenceContext(unitName = "demoPU")
     EntityManager entityManager;
+    @Inject
+    MainView mainView;
+    
     
     @Override
     protected void init(VaadinRequest request) {

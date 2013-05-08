@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author mgubaidullin
  */
-@Stateful
+@Stateless
 @LocalBean
 public class NewSessionBean {
 
