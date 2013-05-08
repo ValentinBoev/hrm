@@ -6,7 +6,6 @@ package com.lex.vaadindemo.views;
 
 import com.lex.vaadindemo.MyVaadinUI;
 import com.lex.vaadindemo.data.Department;
-import com.lex.vaadindemo.data.NewSessionBean;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -14,11 +13,9 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.inject.Named;
 
 /**
@@ -78,7 +75,7 @@ public class EnterInfo extends VerticalLayout implements Button.ClickListener {
             
             Notification.show("Button clicked" + department.getDeptDesc());
 //            System.out.println(UI.getCurrent().getS);
-            ((MyVaadinUI)getUI()).getSessionBean().saveData(department);
+            ((MyVaadinUI)getUI()).getSessionBean().getEntityManager().merge(department);
             
         } catch (FieldGroup.CommitException ex) {
             Logger.getLogger(EnterInfo.class.getName()).log(Level.SEVERE, null, ex);
