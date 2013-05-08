@@ -12,10 +12,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import javax.inject.Named;
-import javax.inject.Scope;
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -31,9 +28,9 @@ public class UserListView extends VerticalLayout {
     private VerticalLayout userLayout;
     private Table userList;
     
+    
     @PersistenceContext(unitName = "demoPU")
-    EntityManagerFactory entityManagerFactory;
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    EntityManager entityMan;
     
     public void init () {
         prepareData();
@@ -60,7 +57,7 @@ public class UserListView extends VerticalLayout {
     
     private void prepareData() {
         
-        TypedQuery<Employee> query = entityManager.createNamedQuery("Employee.fullData", Employee.class);
+        TypedQuery<Employee> query = entityMan.createNamedQuery("Employee.fullData", Employee.class);
         List<Employee> list = query.getResultList();
         data.removeAllItems();
         data.addAll(list);
