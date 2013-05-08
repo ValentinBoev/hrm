@@ -16,17 +16,26 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.transaction.UserTransaction;
 
 /**
  *
  * @author valik
  */
-@Named("enterinfo")
+@Named("entityManager")
+@Stateless
+@TransactionManagement
 public class EnterInfo extends VerticalLayout implements Button.ClickListener {
 
     
-    
+    // BMT idiom
+    @Resource 
+    public UserTransaction utx;
     
     private Button saveBtn;
     private TextField deptName;
@@ -75,7 +84,33 @@ public class EnterInfo extends VerticalLayout implements Button.ClickListener {
             
             Notification.show("Button clicked" + department.getDeptDesc());
 //            System.out.println(UI.getCurrent().getS);
-            ((MyVaadinUI)getUI()).getSessionBean().getEntityManager().merge(department);
+//            EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
+//            em.merge(department);
+//            System.out.println(entityManager);
+//            entityManager.persist(department);
+            
+//            try {
+//                utx.begin();
+//                entityManager.persist(department);
+//                utx.commit();
+//            } catch (Exception ex) {
+//                Logger.getLogger(EnterInfo.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+            // Non-managed environment idiom
+            
+            
+            try {
+                System.out.println(((MyVaadinUI)getUI()).getEntityManager());
+                ((MyVaadinUI)getUI()).getEntityManager().merge(department);
+                utx.commit();
+            }
+            catch (Exception e) {
+                
+            }
+            finally {
+                ((MyVaadinUI)getUI()).getEntityManager().close();
+            }
+            
             
         } catch (FieldGroup.CommitException ex) {
             Logger.getLogger(EnterInfo.class.getName()).log(Level.SEVERE, null, ex);

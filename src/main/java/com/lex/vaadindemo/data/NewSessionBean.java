@@ -6,6 +6,7 @@ package com.lex.vaadindemo.data;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -13,6 +14,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author mgubaidullin
  */
+@Named("entityManager")
 @Stateless
 @LocalBean
 public class NewSessionBean {
@@ -21,6 +23,7 @@ public class NewSessionBean {
     protected EntityManager entityManager;
     
     public EntityManager getEntityManager () {
+        System.out.println(entityManager);
         return entityManager;
     }
 

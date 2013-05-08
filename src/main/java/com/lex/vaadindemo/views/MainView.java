@@ -34,6 +34,7 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     private Button basicBtn2;
     
     EnterInfo enterInfo;
+    private UserListView userListView;
     
     
     public void initUI () {

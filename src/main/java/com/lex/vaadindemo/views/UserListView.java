@@ -5,6 +5,7 @@
 
 package com.lex.vaadindemo.views;
 
+import com.lex.vaadindemo.MyVaadinUI;
 import com.lex.vaadindemo.data.Employee;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.data.util.BeanItemContainer;
@@ -29,8 +30,8 @@ public class UserListView extends VerticalLayout {
     private Table userList;
     
     
-    @PersistenceContext(unitName = "demoPU")
-    EntityManager entityMan;
+//    @PersistenceContext(unitName = "demoPU")
+//    EntityManager entityMan;
     
     public void init () {
         prepareData();
@@ -57,7 +58,8 @@ public class UserListView extends VerticalLayout {
     
     private void prepareData() {
         
-        TypedQuery<Employee> query = entityMan.createNamedQuery("Employee.fullData", Employee.class);
+        EntityManager em = ((MyVaadinUI)getUI()).getSessionBean().getEntityManager();
+        TypedQuery<Employee> query = em.createNamedQuery("Employee.fullData", Employee.class);
         List<Employee> list = query.getResultList();
         data.removeAllItems();
         data.addAll(list);
