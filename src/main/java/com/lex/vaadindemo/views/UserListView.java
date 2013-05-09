@@ -6,15 +6,19 @@
 package com.lex.vaadindemo.views;
 
 import com.lex.vaadindemo.MyVaadinUI;
+import com.lex.vaadindemo.data.Department;
 import com.lex.vaadindemo.data.Employee;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.Window.CloseEvent;
+import com.vaadin.ui.themes.Reindeer;
 import java.util.List;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
@@ -26,8 +30,7 @@ import javax.persistence.TypedQuery;
 public class UserListView extends VerticalLayout {
     
     private BeanItemContainer<Employee> data = new BeanItemContainer(Employee.class);
-    private VerticalLayout userLayout;
-    private Table userList;
+    private Table userListTable;
     
     
 //    @PersistenceContext(unitName = "demoPU")
@@ -40,29 +43,66 @@ public class UserListView extends VerticalLayout {
     }
     
     private void prepareLayout () {
-        userLayout = new VerticalLayout();
-        userLayout.setMargin(true);
-        userLayout.addComponent(userList);
-        userLayout.setExpandRatio(userList, 1f);
+        setMargin(true);
+        addComponent(userListTable);
+        setExpandRatio(userListTable, 1f);
+
     }
     
     private void prepareList () {
-        userList = new Table();
-        userList.setContainerDataSource(data);
-        userList.setSizeFull();
-        userList.setSelectable(true);
-        userList.setMultiSelect(false);
-        userList.setVisibleColumns(new String[]{"e.id", "ed.firstname ed.lastName", "j.jobTitle"});
-        userList.setColumnHeaders(new String[]{"ID", "Name", "Job Title"});
+        userListTable = new Table();
+        userListTable.setContainerDataSource(data);
+        userListTable.setSizeFull();
+        userListTable.setSelectable(true);
+        userListTable.setMultiSelect(false);
+        userListTable.setVisibleColumns(new String[]{"id", "deptDesc","deptLocation", "deptName"});
+        userListTable.setColumnHeaders(new String[]{"id", "dept_desc","dept_location", "dept_name"});
+//        userListTable.addGeneratedColumn("id", new IdColumn());
     }
     
     private void prepareData() {
         
-        EntityManager em = ((MyVaadinUI)getUI()).getSessionBean().getEntityManager();
+        EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
         TypedQuery<Employee> query = em.createNamedQuery("Employee.fullData", Employee.class);
         List<Employee> list = query.getResultList();
         data.removeAllItems();
         data.addAll(list);
     }
-    
+
+
+
+    class IdColumn implements Table.ColumnGenerator, Button.ClickListener {
+
+        @Override
+        public Object generateCell(Table source, Object itemId, Object columnId) {
+            Department department = (Department) itemId;
+            Button btn = new Button(String.valueOf(department.getId()));
+            btn.setStyleName(Reindeer.BUTTON_LINK);
+            btn.setData(department);
+            btn.addClickListener(this);
+            return btn;
+        }
+
+        @Override
+        public void buttonClick(Button.ClickEvent event) {
+            Department department = (Department) event.getButton().getData();
+            EnterInfo enterInfo = new EnterInfo();
+            Window window = new Window("Department: " + department.getId());
+            window.setWidth("97%");
+            window.setHeight("95%");
+            window.setModal(true);
+            window.setContent(enterInfo);
+            getUI().addWindow(window);
+            enterInfo.init(department);
+
+
+            window.addCloseListener(new Window.CloseListener() {
+
+                @Override
+                public void windowClose(CloseEvent e) {
+                    prepareData();
+                }
+            });
+        }
+    }
 }

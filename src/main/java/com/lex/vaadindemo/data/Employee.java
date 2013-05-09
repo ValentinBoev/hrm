@@ -11,8 +11,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "employee", catalog = "hrm", schema = "hrm")
+@Table(name = "employee", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
@@ -55,7 +59,15 @@ public class Employee implements Serializable {
     private double baseSalary;
     @Column(name = "bonus")
     private double bonus;
-
+    @ManyToOne
+    @JoinColumn(name="job_code", nullable=false)
+    private Jobs job;
+    @ManyToOne
+    @JoinColumn(name="dept_code", nullable=false)
+    private Department department;
+    @OneToOne
+    @JoinColumn(name="id", nullable=false)
+    private EmployeeData employeeData;
     
     
 

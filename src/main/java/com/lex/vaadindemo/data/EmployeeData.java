@@ -12,8 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "employee_data", catalog = "hrm", schema = "hrm")
+@Table(name = "employee_data", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EmployeeData.findAll", query = "SELECT ed FROM EmployeeData ed"),
@@ -89,6 +91,9 @@ public class EmployeeData implements Serializable {
     private String experience;
     @Column(name = "resume_id")
     private Integer resumeId;
+    @OneToOne
+    @JoinColumn(name="emp_id", nullable=false)
+    private Employee employee;
 
     
 

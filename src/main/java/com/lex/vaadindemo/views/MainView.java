@@ -4,6 +4,7 @@
  */
 package com.lex.vaadindemo.views;
 
+import com.lex.vaadindemo.data.Department;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
@@ -33,7 +34,7 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     private Button basicBtn1;
     private Button basicBtn2;
     
-    EnterInfo enterInfo;
+    private EnterInfo enterInfo;
     private UserListView userListView;
     
     
@@ -132,29 +133,31 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     @Override
     public void buttonClick(Button.ClickEvent event) {
         if(event.getButton().equals(userBtn1)) {
-            contentArea.setContent(new Label("This is my new User content"));
+            userListView = new UserListView();
+            contentArea.setContent(userListView);
+            userListView.init();
         } else if(event.getButton().equals(userBtn2)) {
             enterInfo = new EnterInfo();
             contentArea.setContent(enterInfo);
-            enterInfo.init();
+            enterInfo.init(new Department());
         } else if(event.getButton().equals(vacancyBtn1)) {
             contentArea.setContent(new Label("This is my new Vacancy content"));
         } else if(event.getButton().equals(vacancyBtn2)) {
             enterInfo = new EnterInfo();
             contentArea.setContent(enterInfo);
-            enterInfo.init();
+            enterInfo.init(new Department());
         } else if(event.getButton().equals(reportBtn1)) {
             contentArea.setContent(new Label("This is my new Report content"));
         } else if(event.getButton().equals(reportBtn2)) {
             enterInfo = new EnterInfo();
             contentArea.setContent(enterInfo);
-            enterInfo.init();
+            enterInfo.init(new Department());
         } else if(event.getButton().equals(basicBtn1)) {
             contentArea.setContent(new Label("This is my new Basic content"));
         } else if(event.getButton().equals(basicBtn2)) {
             enterInfo = new EnterInfo();
             contentArea.setContent(enterInfo);
-            enterInfo.init();
+            enterInfo.init(new Department());
         } 
     }
     
