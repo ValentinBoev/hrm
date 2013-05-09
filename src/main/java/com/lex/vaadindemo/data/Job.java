@@ -5,14 +5,17 @@
 package com.lex.vaadindemo.data;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,12 +25,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "jobs", catalog = "hrm", schema = "hrm")
+@Table(name = "job", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Jobs.findAll", query = "SELECT j FROM Jobs j"),
-    @NamedQuery(name = "Jobs.findById", query = "SELECT j FROM Jobs j WHERE j.id = :id")})
-public class Jobs implements Serializable {
+    @NamedQuery(name = "Job.findAll", query = "SELECT j FROM Job j"),
+    @NamedQuery(name = "Job.findById", query = "SELECT j FROM Job j WHERE j.id = :id")})
+public class Job implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,12 +43,14 @@ public class Jobs implements Serializable {
     @Size(max = 100)
     @Column(name = "employment_status", length = 100)
     private String employmentStatus;   
+    @OneToMany(mappedBy = "job", fetch = FetchType.EAGER)
+    private Set<Employee> employee;
     
 
-    public Jobs() {
+    public Job() {
     }
 
-    public Jobs(Integer id) {
+    public Job(Integer id) {
         this.id = id;
     }
 
@@ -72,6 +77,16 @@ public class Jobs implements Serializable {
     public void setEmploymentStatus(String employmentStatus) {
         this.employmentStatus = employmentStatus;
     }
+
+    public Set<Employee> getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Set<Employee> employee) {
+        this.employee = employee;
+    }
+
+    
     
     
 
@@ -85,10 +100,10 @@ public class Jobs implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Jobs)) {
+        if (!(object instanceof Job)) {
             return false;
         }
-        Jobs other = (Jobs) object;
+        Job other = (Job) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,7 +112,7 @@ public class Jobs implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lex.vaadindemo.data.Jobs[ id=" + id + " ]";
+        return "com.lex.vaadindemo.data.Job[ id=" + id + " ]";
     }
     
 }

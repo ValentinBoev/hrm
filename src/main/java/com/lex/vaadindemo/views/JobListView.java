@@ -6,8 +6,7 @@
 package com.lex.vaadindemo.views;
 
 import com.lex.vaadindemo.MyVaadinUI;
-import com.lex.vaadindemo.data.Department;
-import com.lex.vaadindemo.data.Employee;
+import com.lex.vaadindemo.data.Job;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
@@ -26,15 +25,13 @@ import javax.persistence.Query;
  * @author valik
  */
 @VaadinView("demo")
-@Named("userListView")
-public class UserListView extends VerticalLayout {
+@Named("jobListView")
+public class JobListView extends VerticalLayout {
     
-    private BeanItemContainer<Employee> data = new BeanItemContainer(Employee.class);
-    private Table userListTable;
+    private BeanItemContainer<Job> data = new BeanItemContainer(Job.class);
+    private Table jobListTable;
     
     
-//    @PersistenceContext(unitName = "demoPU")
-//    EntityManager entityMan;
     
     public void init () {
         prepareData();
@@ -44,27 +41,27 @@ public class UserListView extends VerticalLayout {
     
     private void prepareLayout () {
         setMargin(true);
-        addComponent(userListTable);
-        setExpandRatio(userListTable, 1f);
+        addComponent(jobListTable);
+        setExpandRatio(jobListTable, 1f);
 
     }
     
     private void prepareList () {
-        userListTable = new Table();
-        userListTable.setContainerDataSource(data);
-        userListTable.setSizeFull();
-        userListTable.setSelectable(true);
-        userListTable.setMultiSelect(false);
-        userListTable.setVisibleColumns(new String[]{"job","department", "employeeData"});
-        userListTable.setColumnHeaders(new String[]{"Job Title","Department Name", "Employee Data"});
-//        userListTable.addGeneratedColumn("id", new IdColumn());
+        jobListTable = new Table();
+        jobListTable.setContainerDataSource(data);
+        jobListTable.setSizeFull();
+        jobListTable.setSelectable(true);
+        jobListTable.setMultiSelect(false);
+        jobListTable.setVisibleColumns(new String[]{"jobTitle","employmentStatus"});
+        jobListTable.setColumnHeaders(new String[]{"Job Title","Employment Status"});
+        jobListTable.addGeneratedColumn("id", new IdColumn());
     }
     
     private void prepareData() {
         
         EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
-        Query query = em.createNamedQuery("Employee.fullData");
-        List<Employee> list = query.getResultList();
+        Query query = em.createNamedQuery("Job.findAll");
+        List<Job> list = query.getResultList();
         data.removeAllItems();
         data.addAll(list);
         System.out.println(data);
@@ -76,25 +73,25 @@ public class UserListView extends VerticalLayout {
 
         @Override
         public Object generateCell(Table source, Object itemId, Object columnId) {
-            Employee employee = (Employee) itemId;
-            Button btn = new Button(String.valueOf(employee.getId()));
+            Job job = (Job) itemId;
+            Button btn = new Button(String.valueOf(job.getId()));
             btn.setStyleName(Reindeer.BUTTON_LINK);
-            btn.setData(employee);
+            btn.setData(job);
             btn.addClickListener(this);
             return btn;
         }
 
         @Override
         public void buttonClick(Button.ClickEvent event) {
-            Employee employee = (Employee) event.getButton().getData();
-            EnterInfo enterInfo = new EnterInfo();
-            Window window = new Window("Employee: " + employee.getId());
+            Job job = (Job) event.getButton().getData();
+            JobDataEnterVIew jobsDataEnterVIew = new JobDataEnterVIew();
+            Window window = new Window("Job: " + job.getId());
             window.setWidth("97%");
             window.setHeight("95%");
             window.setModal(true);
-            window.setContent(enterInfo);
+            window.setContent(jobsDataEnterVIew);
             getUI().addWindow(window);
-//            enterInfo.init(employee);
+            jobsDataEnterVIew.init(job);
 
 
             window.addCloseListener(new Window.CloseListener() {

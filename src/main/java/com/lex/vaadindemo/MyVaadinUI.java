@@ -12,10 +12,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 
 /**
  * The Application's "main" class
@@ -30,11 +27,6 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
     @EJB
     NewSessionBean bean;
     
-    @PersistenceContext(unitName = "demoPU")
-    @Inject
-    EntityManager entityManager;
-//    EntityManagerFactory entityManagerFactory;
-
     MainView mainView;
 //    @Inject
 //    UserListView userListView;
@@ -45,7 +37,6 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
         setContent(mainView);
         setSizeFull();
         mainView.initUI();
-        System.out.println(bean);
         mainView.setSizeFull();
     }
 
@@ -64,10 +55,7 @@ public class MyVaadinUI extends UI implements ClickListener, CloseListener {
     }
     
     public EntityManager getEntityManager () {
-        return entityManager;
+        return bean.getEntityManager();
     }
-    
-    
-    
-    
+   
 }

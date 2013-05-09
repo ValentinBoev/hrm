@@ -8,13 +8,16 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -22,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "employee", catalog = "hrm", schema = "hrm")
+@Table(name = "employee", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
@@ -30,11 +33,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 //    @NamedQuery(name = "Employee.fullData", query = "SELECT e FROM Employee e   " +
 //                                                    "LEFT JOIN JobOffers jo ON jo.id = e.jobCode " +
 //                                                    "LEFT JOIN EmployeeData ed ON ed.empId = e.id"),
-    @NamedQuery(name = "Employee.fullData", query = "SELECT ed, j, e FROM Employee e, " +
-                                                    "Jobs j, EmployeeData ed  " +
-                                                    "WHERE j.id = e.jobCode AND ed.empId = e.id"),
-    @NamedQuery(name = "Employee.findByJobCode", query = "SELECT e FROM Employee e WHERE e.jobCode = :jobCode"),
-    @NamedQuery(name = "Employee.findByDeptCode", query = "SELECT e FROM Employee e WHERE e.deptCode = :deptCode"),
+//    @NamedQuery(name = "Employee.fullData", query = "SELECT ed, j, e FROM Employee e, " +
+//                                                    "Job j, EmployeeData ed  " +
+//                                                    "WHERE j.id = e.jobCode AND ed.empId = e.id"),
+    @NamedQuery(name = "Employee.fullData", query = "SELECT e FROM Employee e, " +
+                                                    "Job j, EmployeeData ed  "),
     @NamedQuery(name = "Employee.findBySupervisorId", query = "SELECT e FROM Employee e WHERE e.supervisorId = :supervisorId"),
     @NamedQuery(name = "Employee.findByBaseSalary", query = "SELECT e FROM Employee e WHERE e.baseSalary = :baseSalary"),
     @NamedQuery(name = "Employee.findByBonus", query = "SELECT e FROM Employee e WHERE e.bonus = :bonus")})
@@ -45,17 +48,20 @@ public class Employee implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "job_code")
-    private Integer jobCode;
-    @Column(name = "dept_code")
-    private Integer deptCode;
-    @Column(name = "supervisor_id")
+    @Column(name = "supervisor_id", nullable = true)
     private Integer supervisorId;
-    @Column(name = "base_salary")
+    @Column(name = "base_salary", nullable = true)
     private double baseSalary;
-    @Column(name = "bonus")
+    @Column(name = "bonus", nullable = true)
     private double bonus;
-
+    @ManyToOne
+    @JoinColumn(name="job_code", insertable = false, updatable = false)
+    private Job job;
+    @ManyToOne
+    @JoinColumn(name="dept_code", insertable = false, updatable = false)
+    private Department department;
+    @OneToOne(mappedBy = "employee", fetch = FetchType.EAGER)
+    private EmployeeData employeeData;
     
     
 
@@ -72,22 +78,6 @@ public class Employee implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getJobCode() {
-        return jobCode;
-    }
-
-    public void setJobCode(Integer jobCode) {
-        this.jobCode = jobCode;
-    }
-
-    public Integer getDeptCode() {
-        return deptCode;
-    }
-
-    public void setDeptCode(Integer deptCode) {
-        this.deptCode = deptCode;
     }
 
     public Integer getSupervisorId() {
@@ -113,6 +103,32 @@ public class Employee implements Serializable {
     public void setBonus(double bonus) {
         this.bonus = bonus;
     }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public EmployeeData getEmployeeData() {
+        return employeeData;
+    }
+
+    public void setEmployeeData(EmployeeData employeeData) {
+        this.employeeData = employeeData;
+    }
+
+    
 
     
 

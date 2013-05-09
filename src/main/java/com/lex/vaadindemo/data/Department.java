@@ -5,14 +5,17 @@
 package com.lex.vaadindemo.data;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,12 +25,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "department", catalog = "hrm", schema = "hrm")
+@Table(name = "department", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d"),
     @NamedQuery(name = "Department.findById", query = "SELECT d FROM Department d WHERE d.id = :id"),
-    @NamedQuery(name = "Department.findByDeptName", query = "SELECT d FROM Department d WHERE d.deptName = :deptName"),
+    @NamedQuery(name = "Department.findAllDeptName", query = "SELECT d.deptName FROM Department d"),
     @NamedQuery(name = "Department.findByDeptDesc", query = "SELECT d FROM Department d WHERE d.deptDesc = :deptDesc"),
     @NamedQuery(name = "Department.findByDeptLocation", query = "SELECT d FROM Department d WHERE d.deptLocation = :deptLocation")})
 public class Department implements Serializable {
@@ -45,7 +48,9 @@ public class Department implements Serializable {
     private String deptDesc;
     @Size(max = 450)
     @Column(name = "dept_location", length = 450)
-    private String deptLocation;    
+    private String deptLocation; 
+    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
+    private Set<Employee> employee;
     
 
     public Department() {
@@ -86,6 +91,16 @@ public class Department implements Serializable {
     public void setDeptLocation(String deptLocation) {
         this.deptLocation = deptLocation;
     }
+
+    public Set<Employee> getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Set<Employee> employee) {
+        this.employee = employee;
+    }
+
+    
 
     
 

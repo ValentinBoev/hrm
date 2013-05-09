@@ -12,8 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "employee_data", catalog = "hrm", schema = "hrm")
+@Table(name = "employee_data", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EmployeeData.findAll", query = "SELECT ed FROM EmployeeData ed"),
@@ -37,8 +39,6 @@ public class EmployeeData implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "emp_id")
-    private Integer empId;
     @Size(max = 100)
     @Column(name = "first_name", length = 100)
     private String firstname;
@@ -89,6 +89,9 @@ public class EmployeeData implements Serializable {
     private String experience;
     @Column(name = "resume_id")
     private Integer resumeId;
+    @OneToOne
+    @JoinColumn(name="emp_id", insertable = false, updatable = false)
+    private Employee employee;
 
     
 
@@ -105,14 +108,6 @@ public class EmployeeData implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getEmpId() {
-        return empId;
-    }
-
-    public void setEmpId(Integer empId) {
-        this.empId = empId;
     }
 
     public String getFirstname() {
@@ -250,6 +245,16 @@ public class EmployeeData implements Serializable {
     public void setResumeId(Integer resumeId) {
         this.resumeId = resumeId;
     }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    
 
     
 

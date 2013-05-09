@@ -7,7 +7,6 @@ package com.lex.vaadindemo.views;
 
 import com.lex.vaadindemo.MyVaadinUI;
 import com.lex.vaadindemo.data.Department;
-import com.lex.vaadindemo.data.Employee;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
@@ -26,15 +25,14 @@ import javax.persistence.Query;
  * @author valik
  */
 @VaadinView("demo")
-@Named("userListView")
-public class UserListView extends VerticalLayout {
+@Named("departmentListView")
+public class DepartmentListView extends VerticalLayout {
     
-    private BeanItemContainer<Employee> data = new BeanItemContainer(Employee.class);
-    private Table userListTable;
+    private BeanItemContainer<Department> data = new BeanItemContainer(Department.class);
+    
+    private Table departmentListTable;
     
     
-//    @PersistenceContext(unitName = "demoPU")
-//    EntityManager entityMan;
     
     public void init () {
         prepareData();
@@ -44,27 +42,27 @@ public class UserListView extends VerticalLayout {
     
     private void prepareLayout () {
         setMargin(true);
-        addComponent(userListTable);
-        setExpandRatio(userListTable, 1f);
+        addComponent(departmentListTable);
+        setExpandRatio(departmentListTable, 1f);
 
     }
     
     private void prepareList () {
-        userListTable = new Table();
-        userListTable.setContainerDataSource(data);
-        userListTable.setSizeFull();
-        userListTable.setSelectable(true);
-        userListTable.setMultiSelect(false);
-        userListTable.setVisibleColumns(new String[]{"job","department", "employeeData"});
-        userListTable.setColumnHeaders(new String[]{"Job Title","Department Name", "Employee Data"});
-//        userListTable.addGeneratedColumn("id", new IdColumn());
+        departmentListTable = new Table();
+        departmentListTable.setContainerDataSource(data);
+        departmentListTable.setSizeFull();
+        departmentListTable.setSelectable(true);
+        departmentListTable.setMultiSelect(false);
+        departmentListTable.setVisibleColumns(new String[]{"deptName","deptLocation", "deptDesc"});
+        departmentListTable.setColumnHeaders(new String[]{"Department Name","Department Location", "Department Description"});
+        departmentListTable.addGeneratedColumn("id", new IdColumn());
     }
     
     private void prepareData() {
         
         EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
-        Query query = em.createNamedQuery("Employee.fullData");
-        List<Employee> list = query.getResultList();
+        Query query = em.createNamedQuery("Department.findAll");
+        List<Department> list = query.getResultList();
         data.removeAllItems();
         data.addAll(list);
         System.out.println(data);
@@ -76,25 +74,25 @@ public class UserListView extends VerticalLayout {
 
         @Override
         public Object generateCell(Table source, Object itemId, Object columnId) {
-            Employee employee = (Employee) itemId;
-            Button btn = new Button(String.valueOf(employee.getId()));
+            Department department = (Department) itemId;
+            Button btn = new Button(String.valueOf(department.getId()));
             btn.setStyleName(Reindeer.BUTTON_LINK);
-            btn.setData(employee);
+            btn.setData(department);
             btn.addClickListener(this);
             return btn;
         }
 
         @Override
         public void buttonClick(Button.ClickEvent event) {
-            Employee employee = (Employee) event.getButton().getData();
-            EnterInfo enterInfo = new EnterInfo();
-            Window window = new Window("Employee: " + employee.getId());
+            Department department = (Department) event.getButton().getData();
+            DepartmentDataEnterVIew departmentDataEnterVIew = new DepartmentDataEnterVIew();
+            Window window = new Window("Department: " + department.getId());
             window.setWidth("97%");
             window.setHeight("95%");
             window.setModal(true);
-            window.setContent(enterInfo);
+            window.setContent(departmentDataEnterVIew);
             getUI().addWindow(window);
-//            enterInfo.init(employee);
+            departmentDataEnterVIew.init(department);
 
 
             window.addCloseListener(new Window.CloseListener() {
