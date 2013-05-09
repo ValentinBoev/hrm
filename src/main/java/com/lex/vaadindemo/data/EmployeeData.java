@@ -39,8 +39,6 @@ public class EmployeeData implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "emp_id")
-    private Integer empId;
     @Size(max = 100)
     @Column(name = "first_name", length = 100)
     private String firstname;
@@ -110,14 +108,6 @@ public class EmployeeData implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getEmpId() {
-        return empId;
-    }
-
-    public void setEmpId(Integer empId) {
-        this.empId = empId;
     }
 
     public String getFirstname() {
@@ -255,6 +245,16 @@ public class EmployeeData implements Serializable {
     public void setResumeId(Integer resumeId) {
         this.resumeId = resumeId;
     }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    
 
     
 

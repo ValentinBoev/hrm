@@ -56,7 +56,7 @@ public class UserListView extends VerticalLayout {
         userListTable.setSizeFull();
         userListTable.setSelectable(true);
         userListTable.setMultiSelect(false);
-        userListTable.setVisibleColumns(new String[]{"lastName","firstName", "jobTitle"});
+        userListTable.setVisibleColumns(new String[]{"jobCode","deptCode", "baseSalary"});
         userListTable.setColumnHeaders(new String[]{"dept_desc","dept_location", "dept_name"});
 //        userListTable.addGeneratedColumn("id", new IdColumn());
     }
@@ -66,6 +66,7 @@ public class UserListView extends VerticalLayout {
         EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
         Query query = em.createNamedQuery("Employee.fullData");
         List<Employee> list = query.getResultList();
+        System.out.println(list);
         data.removeAllItems();
         data.addAll(list);
         System.out.println(data);
