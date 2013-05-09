@@ -92,7 +92,7 @@ public class EmployeeData implements Serializable {
     @Column(name = "resume_id")
     private Integer resumeId;
     @OneToOne
-    @JoinColumn(name="emp_id", nullable=false)
+    @JoinColumn(name="emp_id", insertable = false, updatable = false)
     private Employee employee;
 
     

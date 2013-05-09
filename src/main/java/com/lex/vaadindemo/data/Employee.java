@@ -34,9 +34,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 //    @NamedQuery(name = "Employee.fullData", query = "SELECT e FROM Employee e   " +
 //                                                    "LEFT JOIN JobOffers jo ON jo.id = e.jobCode " +
 //                                                    "LEFT JOIN EmployeeData ed ON ed.empId = e.id"),
+//    @NamedQuery(name = "Employee.fullData", query = "SELECT ed, j, e FROM Employee e, " +
+//                                                    "Jobs j, EmployeeData ed  " +
+//                                                    "WHERE j.id = e.jobCode AND ed.empId = e.id"),
     @NamedQuery(name = "Employee.fullData", query = "SELECT ed, j, e FROM Employee e, " +
-                                                    "Jobs j, EmployeeData ed  " +
-                                                    "WHERE j.id = e.jobCode AND ed.empId = e.id"),
+                                                    "Jobs j, EmployeeData ed  "),
     @NamedQuery(name = "Employee.findByJobCode", query = "SELECT e FROM Employee e WHERE e.jobCode = :jobCode"),
     @NamedQuery(name = "Employee.findByDeptCode", query = "SELECT e FROM Employee e WHERE e.deptCode = :deptCode"),
     @NamedQuery(name = "Employee.findBySupervisorId", query = "SELECT e FROM Employee e WHERE e.supervisorId = :supervisorId"),
@@ -60,13 +62,13 @@ public class Employee implements Serializable {
     @Column(name = "bonus")
     private double bonus;
     @ManyToOne
-    @JoinColumn(name="job_code", nullable=false)
+    @JoinColumn(name="job_code", insertable = false, updatable = false)
     private Jobs job;
     @ManyToOne
-    @JoinColumn(name="dept_code", nullable=false)
+    @JoinColumn(name="dept_code", insertable = false, updatable = false)
     private Department department;
     @OneToOne
-    @JoinColumn(name="id", nullable=false)
+    @JoinColumn(name="id")
     private EmployeeData employeeData;
     
     

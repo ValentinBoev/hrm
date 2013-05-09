@@ -19,6 +19,7 @@ import com.vaadin.ui.themes.Reindeer;
 import java.util.List;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -55,18 +56,19 @@ public class UserListView extends VerticalLayout {
         userListTable.setSizeFull();
         userListTable.setSelectable(true);
         userListTable.setMultiSelect(false);
-        userListTable.setVisibleColumns(new String[]{"id", "deptDesc","deptLocation", "deptName"});
-        userListTable.setColumnHeaders(new String[]{"id", "dept_desc","dept_location", "dept_name"});
+        userListTable.setVisibleColumns(new String[]{"lastName","firstName", "jobTitle"});
+        userListTable.setColumnHeaders(new String[]{"dept_desc","dept_location", "dept_name"});
 //        userListTable.addGeneratedColumn("id", new IdColumn());
     }
     
     private void prepareData() {
         
         EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
-        TypedQuery<Employee> query = em.createNamedQuery("Employee.fullData", Employee.class);
+        Query query = em.createNamedQuery("Employee.fullData");
         List<Employee> list = query.getResultList();
         data.removeAllItems();
         data.addAll(list);
+        System.out.println(data);
     }
 
 
