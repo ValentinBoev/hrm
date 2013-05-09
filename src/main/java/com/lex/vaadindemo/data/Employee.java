@@ -16,10 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -50,11 +48,11 @@ public class Employee implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "supervisor_id")
+    @Column(name = "supervisor_id", nullable = true)
     private Integer supervisorId;
-    @Column(name = "base_salary")
+    @Column(name = "base_salary", nullable = true)
     private double baseSalary;
-    @Column(name = "bonus")
+    @Column(name = "bonus", nullable = true)
     private double bonus;
     @ManyToOne
     @JoinColumn(name="job_code", insertable = false, updatable = false)

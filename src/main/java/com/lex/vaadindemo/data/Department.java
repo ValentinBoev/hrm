@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d"),
     @NamedQuery(name = "Department.findById", query = "SELECT d FROM Department d WHERE d.id = :id"),
-    @NamedQuery(name = "Department.findByDeptName", query = "SELECT d FROM Department d WHERE d.deptName = :deptName"),
+    @NamedQuery(name = "Department.findAllDeptName", query = "SELECT d.deptName FROM Department d"),
     @NamedQuery(name = "Department.findByDeptDesc", query = "SELECT d FROM Department d WHERE d.deptDesc = :deptDesc"),
     @NamedQuery(name = "Department.findByDeptLocation", query = "SELECT d FROM Department d WHERE d.deptLocation = :deptLocation")})
 public class Department implements Serializable {

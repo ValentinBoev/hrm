@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author valik
  */
-public class EnterInfo extends VerticalLayout implements Button.ClickListener {
+public class DepartmentDataEnterVIew extends VerticalLayout implements Button.ClickListener {
     
     private Button saveBtn;
     private TextField deptName;
@@ -71,7 +71,7 @@ public class EnterInfo extends VerticalLayout implements Button.ClickListener {
             ((MyVaadinUI)getUI()).getSessionBean().saveData(department);
             
         } catch (FieldGroup.CommitException ex) {
-            Logger.getLogger(EnterInfo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DepartmentDataEnterVIew.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

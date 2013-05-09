@@ -5,6 +5,8 @@
 package com.lex.vaadindemo.views;
 
 import com.lex.vaadindemo.data.Department;
+import com.lex.vaadindemo.data.Employee;
+import com.lex.vaadindemo.data.Job;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
@@ -25,17 +27,30 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     VerticalLayout mainMenu;
     Panel contentArea;
     Accordion accordion;
+    
     private Button userBtn1;
     private Button userBtn2;
+    
+    private Button departmentBtn1;
+    private Button departmentBtn2;
+    
     private Button vacancyBtn1;
     private Button vacancyBtn2;
+    
     private Button reportBtn1;
     private Button reportBtn2;
+    
     private Button basicBtn1;
     private Button basicBtn2;
     
+    private JobDataEnterVIew jobsDataEnterVIew;
     private EnterInfo enterInfo;
     private UserListView userListView;
+    private JobListView jobListView;
+    private DepartmentListView departmentListView;
+    private DepartmentDataEnterVIew departmentDataEnterVIew;
+    private UserEnterView userEnterView;
+    
     
     
     public void initUI () {
@@ -77,11 +92,19 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     private VerticalLayout userTab () {
         VerticalLayout tabContent = new VerticalLayout();
         
-        userBtn1 = new Button("Hello, i'm Users userBtn #1");
+        departmentBtn1 = new Button("List Departments");
+        departmentBtn1.addClickListener(this);
+        tabContent.addComponent(departmentBtn1);
+        
+        departmentBtn2 = new Button("Add Department");
+        departmentBtn2.addClickListener(this);
+        tabContent.addComponent(departmentBtn2);
+        
+        userBtn1 = new Button("List Users");
         userBtn1.addClickListener(this);
         tabContent.addComponent(userBtn1);
         
-        userBtn2 = new Button("Hello, i'm Users userBtn #2");
+        userBtn2 = new Button("Add Users");
         userBtn2.addClickListener(this);
         tabContent.addComponent(userBtn2);
         
@@ -91,11 +114,11 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     private VerticalLayout vacancyTab () {
         VerticalLayout tabContent = new VerticalLayout();
         
-        vacancyBtn1 = new Button("Hello, i'm Vacancy vacancyBtn #1");
+        vacancyBtn1 = new Button("List Jobs");
         vacancyBtn1.addClickListener(this);
         tabContent.addComponent(vacancyBtn1);
         
-        vacancyBtn2 = new Button("Hello, i'm Vacancy vacancyBtn #2");
+        vacancyBtn2 = new Button("Add Jobs");
         vacancyBtn2.addClickListener(this);
         tabContent.addComponent(vacancyBtn2);
         
@@ -137,15 +160,25 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
             contentArea.setContent(userListView);
             userListView.init();
         } else if(event.getButton().equals(userBtn2)) {
-            enterInfo = new EnterInfo();
-            contentArea.setContent(enterInfo);
-            enterInfo.init(new Department());
+            userEnterView = new UserEnterView();
+            contentArea.setContent(userEnterView);
+            userEnterView.init(new Employee());
+        } else if(event.getButton().equals(departmentBtn1)) {
+            departmentListView = new DepartmentListView();
+            contentArea.setContent(departmentListView);
+            departmentListView.init();
+        } else if(event.getButton().equals(departmentBtn2)) {
+            departmentDataEnterVIew = new DepartmentDataEnterVIew();
+            contentArea.setContent(departmentDataEnterVIew);
+            departmentDataEnterVIew.init(new Department());
         } else if(event.getButton().equals(vacancyBtn1)) {
-            contentArea.setContent(new Label("This is my new Vacancy content"));
+            jobListView = new JobListView();
+            contentArea.setContent(jobListView);
+            jobListView.init();
         } else if(event.getButton().equals(vacancyBtn2)) {
-            enterInfo = new EnterInfo();
-            contentArea.setContent(enterInfo);
-            enterInfo.init(new Department());
+            jobsDataEnterVIew = new JobDataEnterVIew();
+            contentArea.setContent(jobsDataEnterVIew);
+            jobsDataEnterVIew.init(new Job());
         } else if(event.getButton().equals(reportBtn1)) {
             contentArea.setContent(new Label("This is my new Report content"));
         } else if(event.getButton().equals(reportBtn2)) {
