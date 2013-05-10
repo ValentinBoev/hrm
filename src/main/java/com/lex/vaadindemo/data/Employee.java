@@ -55,10 +55,10 @@ public class Employee implements Serializable {
     @Column(name = "bonus", nullable = true)
     private double bonus;
     @ManyToOne
-    @JoinColumn(name="job_code", insertable = false, updatable = false)
+    @JoinColumn(name="job_code")
     private Job job;
     @ManyToOne
-    @JoinColumn(name="dept_code", insertable = false, updatable = false)
+    @JoinColumn(name="dept_code")
     private Department department;
     @OneToOne(mappedBy = "employee", fetch = FetchType.EAGER)
     private EmployeeData employeeData;
