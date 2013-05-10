@@ -14,6 +14,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import static com.vaadin.server.Sizeable.UNITS_EM;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
@@ -45,7 +46,7 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
     final String[] jobs = new String[] {
             "Director", "CEO", "Vice", "Engineer",
             "Operator", "Developer", "Manager", "Advisor"};
-    private ListSelect jobSelect;
+    private NativeSelect jobSelect;
     private BeanItemContainer<Job> jobData = new BeanItemContainer(Job.class);
     private ListSelect superVisorSelect;
 
@@ -59,33 +60,27 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
     
     
     private void prepareFields() {
-        prepareDepartmentData();
         departmentSelect = new ListSelect("Select a department:");
-//        departmentSelect.setContainerDataSource(departmentData);
-        for (int i = 0; i < departments.length; i++) {
-            departmentSelect.addItem(i);
-            departmentSelect.setItemCaption(i, departments[i]);
-        }
+        departmentSelect.setContainerDataSource(prepareDepartmentData());
+        departmentSelect.setItemCaptionPropertyId("deptName");
         departmentSelect.setRows(1); // perfect length in out case
         departmentSelect.setWidth(10.0f, UNITS_EM);
         departmentSelect.setNullSelectionAllowed(false); // user can not 'unselect'
         departmentSelect.select(1); // select this by default
         
-        jobSelect = new ListSelect("Select a job:");
-        EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
-        Query query = em.createNamedQuery("Job.findAll");
-        List<Job> list = query.getResultList();
-        jobData.removeAllItems();
-        jobData.addAll(list);
-        jobSelect.setContainerDataSource(jobData);
-        jobSelect.setItemCaptionPropertyId("jobTitle");
-//        for (int i = 0; i < jobs.length; i++) {
-//            jobSelect.addItem(i);
-//            jobSelect.setItemCaption(i, jobs[i]);
+        jobSelect = new NativeSelect("Select a job:");
+        jobSelect.setContainerDataSource(prepareJobData());
+        jobSelect.setItemCaptionPropertyId("id");
+        
+//        ComboBox status = new ComboBox("ComboBox");
+//        status.setImmediate(true);
+//        status.setNullSelectionAllowed(false);
+//
+//        for(Status st : (Collection<Status>)item.getItemProperty("availableStatus").getValue()) {
+//            status.addItem(st);
+//            status.setItemCaption(st, st.getLabel());
 //        }
-//        jobSelect.setWidth(10.0f, UNITS_EM);
-//        jobSelect.setNullSelectionAllowed(false); // user can not 'unselect'
-//        jobSelect.select(1); // select this by default
+//        status.setPropertyDataSource(item.getItemProperty("currentStatus"));
         
         superVisorSelect = new ListSelect("Select supervisor:");
         for (int i = 0; i < jobs.length; i++) {
@@ -95,6 +90,7 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
         superVisorSelect.setWidth(10.0f, UNITS_EM);
         superVisorSelect.setNullSelectionAllowed(false); // user can not 'unselect'
         superVisorSelect.select(1); // select this by default
+        superVisorSelect.setRows(1);
         
         
         baseSalary = new TextField("Base Salary:");
@@ -134,12 +130,23 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
         }
     }
     
-    private void prepareDepartmentData() {
+    private BeanItemContainer<Department> prepareDepartmentData() {
         
         EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
-        Query query = em.createNamedQuery("Department.findAllDeptName");
+        Query query = em.createNamedQuery("Department.findAll");
         List<Department> list = query.getResultList();
         departmentData.removeAllItems();
         departmentData.addAll(list);
+        return departmentData;
+    }
+    
+    private BeanItemContainer<Job> prepareJobData() {
+        
+        EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
+        Query query = em.createNamedQuery("Job.findAll");
+        List<Job> list = query.getResultList();
+        jobData.removeAllItems();
+        jobData.addAll(list);
+        return jobData;
     }
 }
