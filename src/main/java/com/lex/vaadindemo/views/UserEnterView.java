@@ -7,6 +7,7 @@ package com.lex.vaadindemo.views;
 import com.lex.vaadindemo.MyVaadinUI;
 import com.lex.vaadindemo.data.Department;
 import com.lex.vaadindemo.data.Employee;
+import com.lex.vaadindemo.data.Job;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -45,6 +46,7 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
             "Director", "CEO", "Vice", "Engineer",
             "Operator", "Developer", "Manager", "Advisor"};
     private ListSelect jobSelect;
+    private BeanItemContainer<Job> jobData = new BeanItemContainer(Job.class);
     private ListSelect superVisorSelect;
 
 
@@ -70,13 +72,20 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
         departmentSelect.select(1); // select this by default
         
         jobSelect = new ListSelect("Select a job:");
-        for (int i = 0; i < jobs.length; i++) {
-            jobSelect.addItem(i);
-            jobSelect.setItemCaption(i, jobs[i]);
-        }
-        jobSelect.setWidth(10.0f, UNITS_EM);
-        jobSelect.setNullSelectionAllowed(false); // user can not 'unselect'
-        jobSelect.select(1); // select this by default
+        EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
+        Query query = em.createNamedQuery("Job.findAll");
+        List<Job> list = query.getResultList();
+        jobData.removeAllItems();
+        jobData.addAll(list);
+        jobSelect.setContainerDataSource(jobData);
+        jobSelect.setItemCaptionPropertyId("jobTitle");
+//        for (int i = 0; i < jobs.length; i++) {
+//            jobSelect.addItem(i);
+//            jobSelect.setItemCaption(i, jobs[i]);
+//        }
+//        jobSelect.setWidth(10.0f, UNITS_EM);
+//        jobSelect.setNullSelectionAllowed(false); // user can not 'unselect'
+//        jobSelect.select(1); // select this by default
         
         superVisorSelect = new ListSelect("Select supervisor:");
         for (int i = 0; i < jobs.length; i++) {
@@ -118,7 +127,6 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
             employeeGroup.commit();
             Employee employee = employeeGroup.getItemDataSource().getBean();
             
-            Notification.show("Button clicked" + employee.getJob());
             ((MyVaadinUI)getUI()).getSessionBean().saveData(employee);
             
         } catch (FieldGroup.CommitException ex) {
