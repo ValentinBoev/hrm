@@ -112,7 +112,8 @@ public class Job implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lex.vaadindemo.data.Job[ id=" + id + " ]";
+//        return "com.lex.vaadindemo.data.Job[ id=" + id + " ]";
+        return getJobTitle();
     }
     
 }

@@ -99,13 +99,6 @@ public class Department implements Serializable {
     public void setEmployee(Set<Employee> employee) {
         this.employee = employee;
     }
-
-    
-
-    
-
-    
-    
     
 
     @Override
@@ -130,7 +123,8 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lex.vaadindemo.data.Department[ id=" + id + " deptName=" + deptName + " deptDesc=" + deptDesc + " deptLocation=" + deptLocation + " ]";
+//        return "com.lex.vaadindemo.data.Department[ id=" + id + " deptName=" + deptName + " deptDesc=" + deptDesc + " deptLocation=" + deptLocation + " ]";
+        return getDeptName();
     }
     
 }

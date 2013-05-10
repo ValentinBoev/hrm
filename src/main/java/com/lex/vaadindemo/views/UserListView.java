@@ -6,7 +6,6 @@
 package com.lex.vaadindemo.views;
 
 import com.lex.vaadindemo.MyVaadinUI;
-import com.lex.vaadindemo.data.Department;
 import com.lex.vaadindemo.data.Employee;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.data.util.BeanItemContainer;
@@ -55,19 +54,18 @@ public class UserListView extends VerticalLayout {
         userListTable.setSizeFull();
         userListTable.setSelectable(true);
         userListTable.setMultiSelect(false);
-        userListTable.setVisibleColumns(new String[]{"job","department", "employeeData"});
-        userListTable.setColumnHeaders(new String[]{"Job Title","Department Name", "Employee Data"});
-//        userListTable.addGeneratedColumn("id", new IdColumn());
+        userListTable.setVisibleColumns(new String[]{"job","department", "supervisorId", "baseSalary", "bonus"});
+        userListTable.setColumnHeaders(new String[]{"Job Title","Department Name", "Supervisor", "Base Salary", "Bonus"});
+        userListTable.addGeneratedColumn("id", new IdColumn());
     }
     
     private void prepareData() {
         
         EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
-        Query query = em.createNamedQuery("Employee.fullData");
+        Query query = em.createNamedQuery("Employee.findAll");
         List<Employee> list = query.getResultList();
         data.removeAllItems();
         data.addAll(list);
-        System.out.println(data);
     }
 
 
@@ -87,14 +85,14 @@ public class UserListView extends VerticalLayout {
         @Override
         public void buttonClick(Button.ClickEvent event) {
             Employee employee = (Employee) event.getButton().getData();
-            EnterInfo enterInfo = new EnterInfo();
+            UserEnterView userEnterView = new UserEnterView();
             Window window = new Window("Employee: " + employee.getId());
             window.setWidth("97%");
             window.setHeight("95%");
             window.setModal(true);
-            window.setContent(enterInfo);
+            window.setContent(userEnterView);
             getUI().addWindow(window);
-//            enterInfo.init(employee);
+            userEnterView.init(employee);
 
 
             window.addCloseListener(new Window.CloseListener() {

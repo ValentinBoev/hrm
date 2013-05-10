@@ -14,10 +14,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import static com.vaadin.server.Sizeable.UNITS_EM;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
@@ -36,7 +33,7 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
     private TextField baseSalary;
     private TextField bonus;
     private BeanFieldGroup<Employee> employeeGroup = new BeanFieldGroup<Employee>(Employee.class);
-    private ListSelect departmentSelect;
+    private NativeSelect departmentSelect;
     
     private BeanItemContainer<Department> departmentData = new BeanItemContainer(Department.class);
     
@@ -48,7 +45,7 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
             "Operator", "Developer", "Manager", "Advisor"};
     private NativeSelect jobSelect;
     private BeanItemContainer<Job> jobData = new BeanItemContainer(Job.class);
-    private ListSelect superVisorSelect;
+    private NativeSelect superVisorSelect;
 
 
     public void init(Employee employee) {
@@ -60,17 +57,14 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
     
     
     private void prepareFields() {
-        departmentSelect = new ListSelect("Select a department:");
+        departmentSelect = new NativeSelect("Select a department:");
         departmentSelect.setContainerDataSource(prepareDepartmentData());
         departmentSelect.setItemCaptionPropertyId("deptName");
-        departmentSelect.setRows(1); // perfect length in out case
         departmentSelect.setWidth(10.0f, UNITS_EM);
-        departmentSelect.setNullSelectionAllowed(false); // user can not 'unselect'
-        departmentSelect.select(1); // select this by default
         
         jobSelect = new NativeSelect("Select a job:");
         jobSelect.setContainerDataSource(prepareJobData());
-        jobSelect.setItemCaptionPropertyId("id");
+        jobSelect.setItemCaptionPropertyId("jobTitle");
         
 //        ComboBox status = new ComboBox("ComboBox");
 //        status.setImmediate(true);
@@ -82,15 +76,12 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
 //        }
 //        status.setPropertyDataSource(item.getItemProperty("currentStatus"));
         
-        superVisorSelect = new ListSelect("Select supervisor:");
+        superVisorSelect = new NativeSelect("Select supervisor:");
         for (int i = 0; i < jobs.length; i++) {
             superVisorSelect.addItem(i);
             superVisorSelect.setItemCaption(i, jobs[i]);
         }
         superVisorSelect.setWidth(10.0f, UNITS_EM);
-        superVisorSelect.setNullSelectionAllowed(false); // user can not 'unselect'
-        superVisorSelect.select(1); // select this by default
-        superVisorSelect.setRows(1);
         
         
         baseSalary = new TextField("Base Salary:");
