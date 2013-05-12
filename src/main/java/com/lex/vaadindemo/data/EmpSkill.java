@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -21,30 +23,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "emp_skills", catalog = "hrm", schema = "hrm")
+@Table(name = "emp_skill", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EmpSkills.findAll", query = "SELECT es FROM EmpSkills es"),
-    @NamedQuery(name = "EmpSkills.findById", query = "SELECT es FROM EmpSkills es WHERE es.id = :id"),
-    @NamedQuery(name = "EmpSkills.findByEmpId", query = "SELECT es FROM EmpSkills es WHERE es.empId = :empId"),
-    @NamedQuery(name = "EmpSkills.findBySkillId", query = "SELECT es FROM EmpSkills es WHERE es.skillId = :skillId")})
-public class EmpSkills implements Serializable {
+    @NamedQuery(name = "EmpSkill.findAll", query = "SELECT es FROM EmpSkill es"),
+    @NamedQuery(name = "EmpSkill.findById", query = "SELECT es FROM EmpSkill es WHERE es.id = :id")})
+public class EmpSkill implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "emp_id")
-    private Integer empId;
-    @Column(name = "skill_id")
-    private Integer skillId;   
+    @ManyToOne
+    @JoinColumn(name = "emp_id")
+    private Employee employee;
+    @ManyToOne
+    @JoinColumn(name = "skill_id")
+    private Skill skill;   
+    
     
 
-    public EmpSkills() {
+    public EmpSkill() {
     }
 
-    public EmpSkills(Integer id) {
+    public EmpSkill(Integer id) {
         this.id = id;
     }
 
@@ -56,21 +59,25 @@ public class EmpSkills implements Serializable {
         this.id = id;
     }
 
-    public Integer getEmpId() {
-        return empId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmpId(Integer empId) {
-        this.empId = empId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public Integer getSkillId() {
-        return skillId;
+    public Skill getSkill() {
+        return skill;
     }
 
-    public void setSkillId(Integer skillId) {
-        this.skillId = skillId;
+    public void setSkill(Skill skill) {
+        this.skill = skill;
     }
+
+    
+    
+    
     
 
     @Override
@@ -83,10 +90,10 @@ public class EmpSkills implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmpSkills)) {
+        if (!(object instanceof EmpSkill)) {
             return false;
         }
-        EmpSkills other = (EmpSkills) object;
+        EmpSkill other = (EmpSkill) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -95,7 +102,7 @@ public class EmpSkills implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lex.vaadindemo.data.EmpSkills[ id=" + id + " ]";
+        return "com.lex.vaadindemo.data.EmpSkill[ id=" + id + " ]";
     }
     
 }

@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "interview", catalog = "hrm", schema = "hrm")
+@Table(name = "interview", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Interview.findAll", query = "SELECT i FROM Interview i"),
@@ -39,16 +41,18 @@ public class Interview implements Serializable {
     private Integer id;
     @Column(name = "cv_id")
     private Integer cvId;
-    @Column(name = "job_id")
-    private Integer jobId;
+    @ManyToOne
+    @JoinColumn(name = "job_code")
+    private Job job;
     @Size(max = 255)
     @Column(name = "interview_type", length = 255)
     private String interviewType;
     @Column(name = "interview_date")
     @Temporal(TemporalType.DATE)
     private Date interviewDate;
-    @Column(name = "interview_by")
-    private Integer interviewBy;
+    @ManyToOne
+    @JoinColumn(name = "interviewer_id")
+    private Employee interviewer;
     @Size(max = 8)
     @Column(name = "selected", length = 8)
     private String selected;
@@ -83,12 +87,12 @@ public class Interview implements Serializable {
         this.cvId = cvId;
     }
 
-    public Integer getJobId() {
-        return jobId;
+    public Job getJob() {
+        return job;
     }
 
-    public void setJobId(Integer jobId) {
-        this.jobId = jobId;
+    public void setJob(Job job) {
+        this.job = job;
     }
 
     public String getInterviewType() {
@@ -107,12 +111,12 @@ public class Interview implements Serializable {
         this.interviewDate = interviewDate;
     }
 
-    public Integer getInterviewBy() {
-        return interviewBy;
+    public Employee getInterviewer() {
+        return interviewer;
     }
 
-    public void setInterviewBy(Integer interviewBy) {
-        this.interviewBy = interviewBy;
+    public void setInterviewer(Employee interviewer) {
+        this.interviewer = interviewer;
     }
 
     public String getSelected() {
@@ -130,6 +134,8 @@ public class Interview implements Serializable {
     public void setAccepted(String accepted) {
         this.accepted = accepted;
     }
+
+    
 
     
 

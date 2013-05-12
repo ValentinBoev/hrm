@@ -5,6 +5,7 @@
 package com.lex.vaadindemo.data;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -48,6 +51,12 @@ public class Employee implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
+    @Size(max = 100)
+    @Column(name = "first_name", length = 100)
+    private String firstname;
+    @Size(max = 100)
+    @Column(name = "last_name", length = 100)
+    private String lastName;
     @Column(name = "supervisor_id", nullable = true)
     private Integer supervisorId;
     @Column(name = "base_salary", nullable = true)
@@ -62,6 +71,10 @@ public class Employee implements Serializable {
     private Department department;
     @OneToOne(mappedBy = "employee", fetch = FetchType.EAGER)
     private EmployeeData employeeData;
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    private Set<EmpSkill> empSkill;
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    private Set<EmpCourse> empCourse;
     
     
 
@@ -78,6 +91,22 @@ public class Employee implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Integer getSupervisorId() {
@@ -128,12 +157,21 @@ public class Employee implements Serializable {
         this.employeeData = employeeData;
     }
 
-    
+    public Set<EmpSkill> getEmpSkill() {
+        return empSkill;
+    }
 
-    
+    public void setEmpSkill(Set<EmpSkill> empSkill) {
+        this.empSkill = empSkill;
+    }
 
-    
-    
+    public Set<EmpCourse> getEmpCourse() {
+        return empCourse;
+    }
+
+    public void setEmpCourse(Set<EmpCourse> empCourse) {
+        this.empCourse = empCourse;
+    }
     
 
     @Override
@@ -158,7 +196,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lex.vaadindemo.data.Employee[ id=" + id + " ]";
+        return getLastName() + " " + getFirstname();
     }
     
 }

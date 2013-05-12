@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -21,13 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "emp_course", catalog = "hrm", schema = "hrm")
+@Table(name = "emp_course", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EmpCourse.findAll", query = "SELECT ec FROM EmpCourse ec"),
-    @NamedQuery(name = "EmpCourse.findById", query = "SELECT ec FROM EmpCourse ec WHERE ec.id = :id"),
-    @NamedQuery(name = "EmpCourse.findByEmpId", query = "SELECT ec FROM EmpCourse ec WHERE ec.empId = :empId"),
-    @NamedQuery(name = "EmpCourse.findByCourseId", query = "SELECT ec FROM EmpCourse ec WHERE ec.courseId = :courseId")})
+    @NamedQuery(name = "EmpCourse.findById", query = "SELECT ec FROM EmpCourse ec WHERE ec.id = :id")})
 public class EmpCourse implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,10 +35,12 @@ public class EmpCourse implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "emp_id")
-    private Integer empId;
-    @Column(name = "course_id")
-    private Integer courseId;   
+    @ManyToOne
+    @JoinColumn(name = "emp_id")
+    private Employee employee;
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;   
     
 
     public EmpCourse() {
@@ -56,21 +58,24 @@ public class EmpCourse implements Serializable {
         this.id = id;
     }
 
-    public Integer getEmpId() {
-        return empId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmpId(Integer empId) {
-        this.empId = empId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public Integer getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
+    
+    
+    
     
 
     @Override
@@ -95,7 +100,7 @@ public class EmpCourse implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lex.vaadindemo.data.Employee[ id=" + id + " ]";
+        return "com.lex.vaadindemo.data.EmpCourse[ id=" + id + " ]";
     }
     
 }

@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "job_offers", catalog = "hrm", schema = "hrm")
+@Table(name = "job_offers", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "JobOffers.findAll", query = "SELECT jo FROM JobOffers jo"),
@@ -37,8 +39,9 @@ public class JobOffers implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "job_id")
-    private Integer jobId;
+    @ManyToOne
+    @JoinColumn(name = "job_code")
+    private Job job;
     @Column(name = "contact_id")
     private Integer contactId;
     @Column(name = "start_date")
@@ -74,12 +77,12 @@ public class JobOffers implements Serializable {
         this.id = id;
     }
 
-    public Integer getJobId() {
-        return jobId;
+    public Job getJob() {
+        return job;
     }
 
-    public void setJobId(Integer jobId) {
-        this.jobId = jobId;
+    public void setJob(Job job) {
+        this.job = job;
     }
 
     public Integer getContactId() {

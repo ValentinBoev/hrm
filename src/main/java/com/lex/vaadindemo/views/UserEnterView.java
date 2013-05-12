@@ -32,14 +32,15 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
     private Button saveBtn;
     private TextField baseSalary;
     private TextField bonus;
+    private TextField firstName;
+    private TextField lastName;
+    
     private BeanFieldGroup<Employee> employeeGroup = new BeanFieldGroup<Employee>(Employee.class);
     private NativeSelect departmentSelect;
     
     private BeanItemContainer<Department> departmentData = new BeanItemContainer(Department.class);
     
-    final String[] departments = new String[] {
-            "Mercury", "Venus", "Earth", "Mars",
-            "Jupiter", "Saturn", "Uranus", "Neptune"};
+    
     final String[] jobs = new String[] {
             "Director", "CEO", "Vice", "Engineer",
             "Operator", "Developer", "Manager", "Advisor"};
@@ -57,6 +58,10 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
     
     
     private void prepareFields() {
+        
+        firstName = new TextField("First Name:");
+        lastName = new TextField("Last Name:");
+        
         departmentSelect = new NativeSelect("Select a department:");
         departmentSelect.setContainerDataSource(prepareDepartmentData());
         departmentSelect.setItemCaptionPropertyId("deptName");
@@ -65,16 +70,7 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
         jobSelect = new NativeSelect("Select a job:");
         jobSelect.setContainerDataSource(prepareJobData());
         jobSelect.setItemCaptionPropertyId("jobTitle");
-        
-//        ComboBox status = new ComboBox("ComboBox");
-//        status.setImmediate(true);
-//        status.setNullSelectionAllowed(false);
-//
-//        for(Status st : (Collection<Status>)item.getItemProperty("availableStatus").getValue()) {
-//            status.addItem(st);
-//            status.setItemCaption(st, st.getLabel());
-//        }
-//        status.setPropertyDataSource(item.getItemProperty("currentStatus"));
+        jobSelect.setWidth(10.0f, UNITS_EM);
         
         superVisorSelect = new NativeSelect("Select supervisor:");
         for (int i = 0; i < jobs.length; i++) {
@@ -87,6 +83,8 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
         baseSalary = new TextField("Base Salary:");
         bonus = new TextField("Bonus:");
         
+        addComponent(firstName);
+        addComponent(lastName);
         addComponent(baseSalary);
         addComponent(bonus);
         addComponent(departmentSelect);
@@ -98,7 +96,8 @@ public class UserEnterView extends VerticalLayout implements Button.ClickListene
         employeeGroup.bind(departmentSelect, "department");
         employeeGroup.bind(jobSelect, "job");
         employeeGroup.bind(superVisorSelect, "supervisorId");
-        
+        employeeGroup.bind(firstName, "firstname");
+        employeeGroup.bind(lastName, "lastName");
     }
     
     private void prepareButtons() {

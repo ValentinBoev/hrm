@@ -53,9 +53,9 @@ public class DepartmentListView extends VerticalLayout {
         departmentListTable.setSizeFull();
         departmentListTable.setSelectable(true);
         departmentListTable.setMultiSelect(false);
-        departmentListTable.setVisibleColumns(new String[]{"deptName","deptLocation", "deptDesc"});
-        departmentListTable.setColumnHeaders(new String[]{"Department Name","Department Location", "Department Description"});
-        departmentListTable.addGeneratedColumn("id", new IdColumn());
+        departmentListTable.setVisibleColumns(new String[]{"id", "deptName","deptLocation", "deptDesc"});
+        departmentListTable.setColumnHeaders(new String[]{"id", "Department Name","Department Location", "Department Description"});
+//        departmentListTable.addGeneratedColumn("id", new IdColumn());
     }
     
     private void prepareData() {

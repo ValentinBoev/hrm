@@ -6,6 +6,7 @@ package com.lex.vaadindemo.views;
 
 import com.lex.vaadindemo.data.Department;
 import com.lex.vaadindemo.data.Employee;
+import com.lex.vaadindemo.data.EmployeeData;
 import com.lex.vaadindemo.data.Job;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.ui.Accordion;
@@ -31,6 +32,9 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     private Button userBtn1;
     private Button userBtn2;
     
+    private Button userDataBtn1;
+    private Button userDataBtn2;
+    
     private Button departmentBtn1;
     private Button departmentBtn2;
     
@@ -50,6 +54,8 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     private DepartmentListView departmentListView;
     private DepartmentDataEnterVIew departmentDataEnterVIew;
     private UserEnterView userEnterView;
+    private UserDataListView userDataListView;
+    private UserDataEnterView userDataEnterView;
     
     
     
@@ -108,6 +114,14 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
         userBtn2.addClickListener(this);
         tabContent.addComponent(userBtn2);
         
+        userDataBtn1 = new Button("List User Data");
+        userDataBtn1.addClickListener(this);
+        tabContent.addComponent(userDataBtn1);
+        
+        userDataBtn2 = new Button("Add User Data");
+        userDataBtn2.addClickListener(this);
+        tabContent.addComponent(userDataBtn2);
+        
         return tabContent;
     }
     
@@ -163,6 +177,14 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
             userEnterView = new UserEnterView();
             contentArea.setContent(userEnterView);
             userEnterView.init(new Employee());
+        } else if(event.getButton().equals(userDataBtn1)) {
+            userDataListView = new UserDataListView();
+            contentArea.setContent(userDataListView);
+            userDataListView.init();
+        } else if(event.getButton().equals(userDataBtn2)) {
+            userDataEnterView = new UserDataEnterView();
+            contentArea.setContent(userDataEnterView);
+            userDataEnterView.init(new EmployeeData());
         } else if(event.getButton().equals(departmentBtn1)) {
             departmentListView = new DepartmentListView();
             contentArea.setContent(departmentListView);

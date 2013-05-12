@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -21,13 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "job_skill", catalog = "hrm", schema = "hrm")
+@Table(name = "job_skill", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "JobSkill.findAll", query = "SELECT js FROM JobSkill js"),
-    @NamedQuery(name = "JobSkill.findById", query = "SELECT js FROM JobSkill js WHERE js.id = :id"),
-    @NamedQuery(name = "JobSkill.findByJobId", query = "SELECT js FROM JobSkill js WHERE js.jobId = :jobId"),
-    @NamedQuery(name = "JobSkill.findBySkillId", query = "SELECT js FROM JobSkill js WHERE js.skillId = :skillId")})
+    @NamedQuery(name = "JobSkill.findById", query = "SELECT js FROM JobSkill js WHERE js.id = :id")})
 public class JobSkill implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,10 +35,12 @@ public class JobSkill implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "job_id")
-    private Integer jobId;
-    @Column(name = "skill_id")
-    private Integer skillId;   
+    @ManyToOne
+    @JoinColumn(name = "job_code")
+    private Job job;
+    @ManyToOne
+    @JoinColumn(name = "skill_code")
+    private Skill skill;   
     
 
     public JobSkill() {
@@ -56,21 +58,23 @@ public class JobSkill implements Serializable {
         this.id = id;
     }
 
-    public Integer getJobId() {
-        return jobId;
+    public Job getJob() {
+        return job;
     }
 
-    public void setJobId(Integer jobId) {
-        this.jobId = jobId;
+    public void setJob(Job job) {
+        this.job = job;
     }
 
-    public Integer getSkillId() {
-        return skillId;
+    public Skill getSkill() {
+        return skill;
     }
 
-    public void setSkillId(Integer skillId) {
-        this.skillId = skillId;
+    public void setSkill(Skill skill) {
+        this.skill = skill;
     }
+
+    
     
 
     @Override

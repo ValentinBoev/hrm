@@ -40,12 +40,6 @@ public class EmployeeData implements Serializable {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Size(max = 100)
-    @Column(name = "first_name", length = 100)
-    private String firstname;
-    @Size(max = 100)
-    @Column(name = "last_name", length = 100)
-    private String lastName;
-    @Size(max = 100)
     @Column(name = "middle_name", length = 100)
     private String middleName;
     @Size(max = 450)
@@ -89,8 +83,11 @@ public class EmployeeData implements Serializable {
     private String experience;
     @Column(name = "resume_id")
     private Integer resumeId;
+    @Size(max = 128)
+    @Column(name = "image_path", length = 128)
+    private String imagePath;
     @OneToOne
-    @JoinColumn(name="emp_id", insertable = false, updatable = false)
+    @JoinColumn(name="emp_id")
     private Employee employee;
 
     
@@ -110,21 +107,7 @@ public class EmployeeData implements Serializable {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    
 
     public String getMiddleName() {
         return middleName;
@@ -254,12 +237,14 @@ public class EmployeeData implements Serializable {
         this.employee = employee;
     }
 
-    
+    public String getImagePath() {
+        return imagePath;
+    }
 
-    
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
-    
-    
     
 
     @Override

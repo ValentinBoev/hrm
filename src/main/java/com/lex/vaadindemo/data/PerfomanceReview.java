@@ -5,15 +5,20 @@
 package com.lex.vaadindemo.data;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,18 +27,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "perfomance_review", catalog = "hrm", schema = "hrm")
+@Table(name = "perfomance_review", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PerfomanceReview.findAll", query = "SELECT pr FROM PerfomanceReview pr"),
-    @NamedQuery(name = "PerfomanceReview.findById", query = "SELECT pr FROM PerfomanceReview pr WHERE pr.id = :id"),
-    @NamedQuery(name = "PerfomanceReview.findByWorkerId", query = "SELECT pr FROM PerfomanceReview pr WHERE pr.workerId = :workerId"),
-    @NamedQuery(name = "PerfomanceReview.findByReviewerId", query = "SELECT pr FROM PerfomanceReview pr WHERE pr.reviewerId = :reviewerId"),
-    @NamedQuery(name = "PerfomanceReview.findByCreatorId", query = "SELECT pr FROM PerfomanceReview pr WHERE pr.creatorId = :creatorId"),
-    @NamedQuery(name = "PerfomanceReview.findByCreationDate", query = "SELECT pr FROM PerfomanceReview pr WHERE pr.creationDate = :creationDate"),
-    @NamedQuery(name = "PerfomanceReview.findByPeriodFrom", query = "SELECT pr FROM PerfomanceReview pr WHERE pr.periodFrom = :periodFrom"),
-    @NamedQuery(name = "PerfomanceReview.findByPeriodTo", query = "SELECT pr FROM PerfomanceReview pr WHERE pr.periodTo = :periodTo"),
-    @NamedQuery(name = "PerfomanceReview.findByReviewState", query = "SELECT pr FROM PerfomanceReview pr WHERE pr.reviewState = :reviewState")})
+    @NamedQuery(name = "PerfomanceReview.findById", query = "SELECT pr FROM PerfomanceReview pr WHERE pr.id = :id")})
 public class PerfomanceReview implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,27 +39,27 @@ public class PerfomanceReview implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Size(max = 11)
-    @Column(name = "worker_id", length = 11)
-    private Integer workerId;
-    @Size(max = 11)
-    @Column(name = "reviewer_id", length = 11)
-    private Integer reviewerId;
-    @Size(max = 11)
-    @Column(name = "creator_id", length = 11)
-    private Integer creatorId;
-    @Size(max = 11)
-    @Column(name = "job_title_code", length = 11)
-    private Integer jobTitleCode;
-    @Size(max = 450)
-    @Column(name = "creation_date", length = 450)
-    private String creationDate;
-    @Size(max = 450)
-    @Column(name = "period_from", length = 450)
-    private String periodFrom;
-    @Size(max = 450)
-    @Column(name = "period_to", length = 450)
-    private Integer periodTo;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+    @ManyToOne
+    @JoinColumn(name = "reviewer_id")
+    private Employee reviewer;
+    @ManyToOne
+    @JoinColumn(name = "creator_id")
+    private Employee creator;
+    @ManyToOne
+    @JoinColumn(name = "job_code")
+    private Job job;
+    @Column(name = "creation_date")
+    @Temporal(TemporalType.DATE)
+    private Date creationDate;
+    @Column(name = "period_from")
+    @Temporal(TemporalType.DATE)
+    private Date periodFrom;
+    @Column(name = "period_to")
+    @Temporal(TemporalType.DATE)
+    private Date periodTo;
     @Size(max = 450)
     @Column(name = "review_state", length = 450)
     private String reviewState;
@@ -84,59 +82,59 @@ public class PerfomanceReview implements Serializable {
         this.id = id;
     }
 
-    public Integer getWorkerId() {
-        return workerId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setWorkerId(Integer workerId) {
-        this.workerId = workerId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public Integer getReviewerId() {
-        return reviewerId;
+    public Employee getReviewer() {
+        return reviewer;
     }
 
-    public void setReviewerId(Integer reviewerId) {
-        this.reviewerId = reviewerId;
+    public void setReviewer(Employee reviewer) {
+        this.reviewer = reviewer;
     }
 
-    public Integer getCreatorId() {
-        return creatorId;
+    public Employee getCreator() {
+        return creator;
     }
 
-    public void setCreatorId(Integer creatorId) {
-        this.creatorId = creatorId;
+    public void setCreator(Employee creator) {
+        this.creator = creator;
     }
 
-    public Integer getJobTitleCode() {
-        return jobTitleCode;
+    public Job getJob() {
+        return job;
     }
 
-    public void setJobTitleCode(Integer jobTitleCode) {
-        this.jobTitleCode = jobTitleCode;
+    public void setJob(Job job) {
+        this.job = job;
     }
 
-    public String getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    public String getPeriodFrom() {
+    public Date getPeriodFrom() {
         return periodFrom;
     }
 
-    public void setPeriodFrom(String periodFrom) {
+    public void setPeriodFrom(Date periodFrom) {
         this.periodFrom = periodFrom;
     }
 
-    public Integer getPeriodTo() {
+    public Date getPeriodTo() {
         return periodTo;
     }
 
-    public void setPeriodTo(Integer periodTo) {
+    public void setPeriodTo(Date periodTo) {
         this.periodTo = periodTo;
     }
 
@@ -147,6 +145,8 @@ public class PerfomanceReview implements Serializable {
     public void setReviewState(String reviewState) {
         this.reviewState = reviewState;
     }
+    
+    
 
     
     

@@ -7,6 +7,7 @@ package com.lex.vaadindemo.views;
 
 import com.lex.vaadindemo.MyVaadinUI;
 import com.lex.vaadindemo.data.Employee;
+import com.lex.vaadindemo.data.EmployeeData;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
@@ -29,11 +30,10 @@ import javax.persistence.Query;
 public class UserListView extends VerticalLayout {
     
     private BeanItemContainer<Employee> data = new BeanItemContainer(Employee.class);
+    private BeanItemContainer<EmployeeData> employeeBean = new BeanItemContainer(EmployeeData.class);
     private Table userListTable;
     
     
-//    @PersistenceContext(unitName = "demoPU")
-//    EntityManager entityMan;
     
     public void init () {
         prepareData();
@@ -54,9 +54,17 @@ public class UserListView extends VerticalLayout {
         userListTable.setSizeFull();
         userListTable.setSelectable(true);
         userListTable.setMultiSelect(false);
-        userListTable.setVisibleColumns(new String[]{"job","department", "supervisorId", "baseSalary", "bonus"});
-        userListTable.setColumnHeaders(new String[]{"Job Title","Department Name", "Supervisor", "Base Salary", "Bonus"});
+        userListTable.setVisibleColumns(new String[]{
+            "id", "firstname", "lastName", "job", 
+            "department", "supervisorId", "baseSalary", 
+            "bonus"
+        });
+        userListTable.setColumnHeaders(new String[]{
+            "id", "First name", "Last name", "Job Title", 
+            "Department Name", "Supervisor", "Base Salary", "Bonus"
+        });
         userListTable.addGeneratedColumn("id", new IdColumn());
+        userListTable.addGeneratedColumn("edit", new EditColumn());
     }
     
     private void prepareData() {
@@ -102,6 +110,52 @@ public class UserListView extends VerticalLayout {
                     prepareData();
                 }
             });
+        }
+    }
+    
+    class EditColumn implements Table.ColumnGenerator, Button.ClickListener {
+
+        @Override
+        public Object generateCell(Table source, Object itemId, Object columnId) {
+            Employee employee = (Employee) itemId;
+            Button btn = new Button(String.valueOf(employee.getId()));
+            btn.setStyleName(Reindeer.BUTTON_LINK);
+            btn.setData(employee);
+            btn.addClickListener(this);
+            return btn;
+        }
+
+        @Override
+        public void buttonClick(Button.ClickEvent event) {
+            Employee employee = (Employee) event.getButton().getData();
+            
+            
+            
+//            EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
+//            Query query = em.createNamedQuery("EmployeeData.findById").setParameter("id", employee.getId());
+//            List<EmployeeData> list = query.getResultList();
+//            employeeBean.removeAllItems();
+//            employeeBean.addAll(list);
+//            
+//            EmployeeData employeeData = new EmployeeData();
+            
+            UserDataEnterView userDataEnterView = new UserDataEnterView();
+            Window window = new Window("Employee: " + employee.getLastName() + " " + employee.getFirstname());
+            window.setWidth("97%");
+            window.setHeight("95%");
+            window.setModal(true);
+            window.setContent(userDataEnterView);
+            getUI().addWindow(window);
+            userDataEnterView.init(employee.getEmployeeData());
+
+
+//            window.addCloseListener(new Window.CloseListener() {
+//
+//                @Override
+//                public void windowClose(CloseEvent e) {
+//                    prepareData();
+//                }
+//            });
         }
     }
 }

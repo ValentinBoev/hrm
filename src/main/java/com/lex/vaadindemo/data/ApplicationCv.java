@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author valentin boev
  */
 @Entity
-@Table(name = "application_cv", catalog = "hrm", schema = "hrm")
+@Table(name = "application_cv", catalog = "hrm", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ApplicationCv.findAll", query = "SELECT ac FROM ApplicationCv ac"),
@@ -40,8 +42,9 @@ public class ApplicationCv implements Serializable {
     @Size(max = 8)
     @Column(name = "path", length = 8)
     private String path;
-    @Column(name = "job_id")
-    private Integer jobId;
+    @ManyToOne
+    @JoinColumn(name = "job_code")
+    private Job job;
     @Column(name = "submit_date")
     @Temporal(TemporalType.DATE)
     private Date submitDate;
@@ -85,13 +88,14 @@ public class ApplicationCv implements Serializable {
         this.path = path;
     }
 
-    public Integer getJobId() {
-        return jobId;
+    public Job getJob() {
+        return job;
     }
 
-    public void setJobId(Integer jobId) {
-        this.jobId = jobId;
+    public void setJob(Job job) {
+        this.job = job;
     }
+
 
     public Date getSubmitDate() {
         return submitDate;
