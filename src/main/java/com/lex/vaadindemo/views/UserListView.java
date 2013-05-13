@@ -118,8 +118,7 @@ public class UserListView extends VerticalLayout {
         @Override
         public Object generateCell(Table source, Object itemId, Object columnId) {
             Employee employee = (Employee) itemId;
-            Button btn = new Button(String.valueOf(employee.getId()));
-            btn.setStyleName(Reindeer.BUTTON_LINK);
+            Button btn = new Button("Edit");
             btn.setData(employee);
             btn.addClickListener(this);
             return btn;
@@ -129,16 +128,6 @@ public class UserListView extends VerticalLayout {
         public void buttonClick(Button.ClickEvent event) {
             Employee employee = (Employee) event.getButton().getData();
             
-            
-            
-//            EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
-//            Query query = em.createNamedQuery("EmployeeData.findById").setParameter("id", employee.getId());
-//            List<EmployeeData> list = query.getResultList();
-//            employeeBean.removeAllItems();
-//            employeeBean.addAll(list);
-//            
-//            EmployeeData employeeData = new EmployeeData();
-            
             UserDataEnterView userDataEnterView = new UserDataEnterView();
             Window window = new Window("Employee: " + employee.getLastName() + " " + employee.getFirstname());
             window.setWidth("97%");
@@ -146,7 +135,12 @@ public class UserListView extends VerticalLayout {
             window.setModal(true);
             window.setContent(userDataEnterView);
             getUI().addWindow(window);
-            userDataEnterView.init(employee.getEmployeeData());
+            if (employee.getEmployeeData() == null) {
+                userDataEnterView.init(new EmployeeData());
+            } else {
+                userDataEnterView.init(employee.getEmployeeData());
+            }
+            
 
 
 //            window.addCloseListener(new Window.CloseListener() {
