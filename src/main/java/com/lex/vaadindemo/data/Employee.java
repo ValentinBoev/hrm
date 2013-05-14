@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 //    @NamedQuery(name = "Employee.fullData", query = "SELECT ed, j, e FROM Employee e, " +
 //                                                    "Job j, EmployeeData ed  " +
 //                                                    "WHERE j.id = e.jobCode AND ed.empId = e.id"),
-    @NamedQuery(name = "Employee.fullData", query = "SELECT e FROM Employee e, " +
+    @NamedQuery(name = "Employee.fullData", query = "SELECT e, j, ed FROM Employee e, " +
                                                     "Job j, EmployeeData ed  "),
     @NamedQuery(name = "Employee.findBySupervisorId", query = "SELECT e FROM Employee e WHERE e.supervisorId = :supervisorId"),
     @NamedQuery(name = "Employee.findByBaseSalary", query = "SELECT e FROM Employee e WHERE e.baseSalary = :baseSalary"),

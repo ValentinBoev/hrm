@@ -56,6 +56,7 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
     private UserEnterView userEnterView;
     private UserDataListView userDataListView;
     private UserDataEnterView userDataEnterView;
+    private SingleUserReportView singleUserReportView;
     
     
     
@@ -202,7 +203,9 @@ public class MainView extends VerticalLayout implements Button.ClickListener {
             contentArea.setContent(jobsDataEnterVIew);
             jobsDataEnterVIew.init(new Job());
         } else if(event.getButton().equals(reportBtn1)) {
-            contentArea.setContent(new Label("This is my new Report content"));
+            singleUserReportView = new SingleUserReportView();
+            contentArea.setContent(singleUserReportView);
+            singleUserReportView.init();
         } else if(event.getButton().equals(reportBtn2)) {
             enterInfo = new EnterInfo();
             contentArea.setContent(enterInfo);
