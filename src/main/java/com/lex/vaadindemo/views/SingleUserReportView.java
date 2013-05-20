@@ -33,6 +33,7 @@ public class SingleUserReportView extends VerticalLayout {
     private BeanItemContainer<EmployeeData> employeeBean = new BeanItemContainer(EmployeeData.class);
     private Table userListTable;
     
+    List<Employee> list;
     
     
     public void init () {
@@ -49,6 +50,11 @@ public class SingleUserReportView extends VerticalLayout {
     }
     
     private void prepareList () {
+        
+        for (Object o :  list) {
+            System.out.println(o.getClass());
+        }
+        
         userListTable = new Table();
         userListTable.setContainerDataSource(data);
         userListTable.setSizeFull();
@@ -76,7 +82,7 @@ public class SingleUserReportView extends VerticalLayout {
         
         EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
         Query query = em.createNamedQuery("Employee.fullData");
-        List<Employee> list = query.getResultList();
+        list = query.getResultList();
         data.removeAllItems();
         data.addAll(list);
     }

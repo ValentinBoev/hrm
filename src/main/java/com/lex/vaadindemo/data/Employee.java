@@ -38,8 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 //                                                    "LEFT JOIN EmployeeData ed ON ed.empId = e.id"),
 //    @NamedQuery(name = "Employee.fullData", query = "SELECT ed, j, e FROM Employee e, " +
 //                                                    "Job j, EmployeeData ed  " +
-//                                                    "WHERE j.id = e.jobCode AND ed.empId = e.id"),
-    @NamedQuery(name = "Employee.fullData", query = "SELECT e FROM Employee e, e.job j, e.employeeData ed  "
+//                          ,                          "WHERE j.id = e.jobCode AND ed.empId = e.id"),
+    @NamedQuery(name = "Employee.fullData", query = "SELECT e FROM Employee e  "
 //        SELECT DISTINCT o " +
 //    "FROM Organization o, User u " +
 //    "JOIN o.roles oRole " +
