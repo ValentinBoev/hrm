@@ -62,8 +62,9 @@ public class Employee implements Serializable {
     @Size(max = 100)
     @Column(name = "last_name", length = 100)
     private String lastName;
-    @Column(name = "supervisor_id", nullable = true)
-    private Integer supervisorId;
+    @ManyToOne
+    @JoinColumn(name = "supervisor_id", nullable = true)
+    private Employee supervisorId;
     @Column(name = "base_salary", nullable = true)
     private double baseSalary;
     @Column(name = "bonus", nullable = true)
@@ -114,11 +115,11 @@ public class Employee implements Serializable {
         this.lastName = lastName;
     }
 
-    public Integer getSupervisorId() {
+    public Employee getSupervisorId() {
         return supervisorId;
     }
 
-    public void setSupervisorId(Integer supervisorId) {
+    public void setSupervisorId(Employee supervisorId) {
         this.supervisorId = supervisorId;
     }
 

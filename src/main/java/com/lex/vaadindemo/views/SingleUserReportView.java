@@ -60,10 +60,10 @@ public class SingleUserReportView extends VerticalLayout {
         userListTable.setSizeFull();
         userListTable.setSelectable(true);
         userListTable.setMultiSelect(false);
-        userListTable.setVisibleColumns(new String[]{
+        userListTable.setVisibleColumns(new Object[]{
             "id", "firstname", "lastName", "job", 
             "department", "supervisorId", "baseSalary", 
-            "bonus", "address"
+            "bonus", "city"
 //            "address", "city", "zip", "mobilePhone", 
 //            "homePhone", "email", "gender"
         });
