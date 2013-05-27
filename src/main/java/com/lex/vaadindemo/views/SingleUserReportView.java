@@ -66,15 +66,15 @@ public class SingleUserReportView extends VerticalLayout {
             "id", "firstname", "lastName", "job", 
             "department", "supervisorId", "baseSalary", 
             "bonus", //"city",
-            "employeeData.address"//, "employeeData.city", "employeeData.zip", "employeeData.mobilePhone",
-            //"employeeData.homePhone", "employeeData.email", "employeeData.gender"
+            "employeeData.address", "employeeData.city", "employeeData.zip", "employeeData.mobilePhone",
+            "employeeData.homePhone", "employeeData.email", "employeeData.gender"
         });
         userListTable.setColumnHeaders(new String[]{
             "id", "First name", "Last name", "Job Title", 
             "Department Name", "Supervisor", "Base Salary", 
             "Bonus", //"address",
-            "employeeData.address"//, "employeeData.city", "employeeData.zip", "employeeData.mobilePhone",
-            //"employeeData.homePhone", "employeeData.email", "employeeData.gender"
+            "Adress", "City", "zip", "Mobile Phone",
+            "Home Phone", "Email", "Gender"
         });
 //        userListTable.addGeneratedColumn("id", new IdColumn());
 //        userListTable.addGeneratedColumn("edit", new EditColumn());
@@ -83,6 +83,12 @@ public class SingleUserReportView extends VerticalLayout {
     private void prepareData() {
         
         data.addNestedContainerProperty("employeeData.address");
+        data.addNestedContainerProperty("employeeData.city");
+        data.addNestedContainerProperty("employeeData.zip");
+        data.addNestedContainerProperty("employeeData.mobilePhone");
+        data.addNestedContainerProperty("employeeData.homePhone");
+        data.addNestedContainerProperty("employeeData.email");
+        data.addNestedContainerProperty("employeeData.gender");
 
         EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
         Query query = em.createNamedQuery("Employee.fullData");
