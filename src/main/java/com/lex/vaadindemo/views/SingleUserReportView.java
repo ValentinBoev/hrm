@@ -63,16 +63,16 @@ public class SingleUserReportView extends VerticalLayout {
         userListTable.setVisibleColumns(new Object[]{
             "id", "firstname", "lastName", "job", 
             "department", "supervisorId", "baseSalary", 
-            "bonus", "city"
-//            "address", "city", "zip", "mobilePhone", 
-//            "homePhone", "email", "gender"
+            "bonus", "city",
+            "employeeData.address", "employeeData.city", "employeeData.zip", "employeeData.mobilePhone",
+            "employeeData.homePhone", "employeeData.email", "employeeData.gender"
         });
         userListTable.setColumnHeaders(new String[]{
             "id", "First name", "Last name", "Job Title", 
             "Department Name", "Supervisor", "Base Salary", 
-            "Bonus", "address"
-//            "address", "city", "zip", "mobilePhone", 
-//            "homePhone", "email", "gender"
+            "Bonus", "address",
+            "employeeData.address", "employeeData.city", "employeeData.zip", "employeeData.mobilePhone",
+            "employeeData.homePhone", "employeeData.email", "employeeData.gender"
         });
 //        userListTable.addGeneratedColumn("id", new IdColumn());
 //        userListTable.addGeneratedColumn("edit", new EditColumn());
