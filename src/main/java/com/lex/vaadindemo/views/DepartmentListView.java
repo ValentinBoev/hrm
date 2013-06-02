@@ -85,14 +85,14 @@ public class DepartmentListView extends VerticalLayout {
         @Override
         public void buttonClick(Button.ClickEvent event) {
             Department department = (Department) event.getButton().getData();
-            DepartmentDataEnterVIew departmentDataEnterVIew = new DepartmentDataEnterVIew();
+            DepartmentDataEnterView departmentDataEnterView = new DepartmentDataEnterView();
             Window window = new Window("Department: " + department.getId());
             window.setWidth("97%");
             window.setHeight("95%");
             window.setModal(true);
-            window.setContent(departmentDataEnterVIew);
+            window.setContent(departmentDataEnterView);
             getUI().addWindow(window);
-            departmentDataEnterVIew.init(department);
+            departmentDataEnterView.init(department);
 
 
             window.addCloseListener(new Window.CloseListener() {

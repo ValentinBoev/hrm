@@ -6,7 +6,7 @@
 package com.lex.vaadindemo.views;
 
 import com.lex.vaadindemo.MyVaadinUI;
-import com.lex.vaadindemo.data.Job;
+import com.lex.vaadindemo.data.Course;
 import com.vaadin.cdi.VaadinView;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
@@ -25,11 +25,11 @@ import javax.persistence.Query;
  * @author valik
  */
 @VaadinView("demo")
-@Named("jobListView")
-public class JobListView extends VerticalLayout {
+@Named("courseListView")
+public class CourseListView extends VerticalLayout {
     
-    private BeanItemContainer<Job> data = new BeanItemContainer(Job.class);
-    private Table jobListTable;
+    private BeanItemContainer<Course> data = new BeanItemContainer(Course.class);
+    private Table courseListTable;
     
     
     
@@ -41,30 +41,29 @@ public class JobListView extends VerticalLayout {
     
     private void prepareLayout () {
         setMargin(true);
-        addComponent(jobListTable);
-        setExpandRatio(jobListTable, 1f);
+        addComponent(courseListTable);
+        setExpandRatio(courseListTable, 1f);
 
     }
     
     private void prepareList () {
-        jobListTable = new Table();
-        jobListTable.setContainerDataSource(data);
-        jobListTable.setSizeFull();
-        jobListTable.setSelectable(true);
-        jobListTable.setMultiSelect(false);
-        jobListTable.setVisibleColumns(new String[]{"jobTitle","employmentStatus"});
-        jobListTable.setColumnHeaders(new String[]{"Job Title","Employment Status"});
-        jobListTable.addGeneratedColumn("id", new IdColumn());
+        courseListTable = new Table();
+        courseListTable.setContainerDataSource(data);
+        courseListTable.setSizeFull();
+        courseListTable.setSelectable(true);
+        courseListTable.setMultiSelect(false);
+        courseListTable.setVisibleColumns(new String[]{"courseDesc"});
+        courseListTable.setColumnHeaders(new String[]{"Course Title"});
+        courseListTable.addGeneratedColumn("id", new IdColumn());
     }
     
     private void prepareData() {
         
         EntityManager em = ((MyVaadinUI)getUI()).getEntityManager();
-        Query query = em.createNamedQuery("Job.findAll");
-        List<Job> list = query.getResultList();
+        Query query = em.createNamedQuery("Course.findAll");
+        List<Course> list = query.getResultList();
         data.removeAllItems();
         data.addAll(list);
-        System.out.println(data);
     }
 
 
@@ -73,25 +72,25 @@ public class JobListView extends VerticalLayout {
 
         @Override
         public Object generateCell(Table source, Object itemId, Object columnId) {
-            Job job = (Job) itemId;
-            Button btn = new Button(String.valueOf(job.getId()));
+            Course course = (Course) itemId;
+            Button btn = new Button(String.valueOf(course.getId()));
             btn.setStyleName(Reindeer.BUTTON_LINK);
-            btn.setData(job);
+            btn.setData(course);
             btn.addClickListener(this);
             return btn;
         }
 
         @Override
         public void buttonClick(Button.ClickEvent event) {
-            Job job = (Job) event.getButton().getData();
-            JobDataEnterView jobsDataEnterView = new JobDataEnterView();
-            Window window = new Window("Job: " + job.getId());
+            Course course = (Course) event.getButton().getData();
+            CourseDataEnterView coursesDataEnterView = new CourseDataEnterView();
+            Window window = new Window("Course: " + course.getId());
             window.setWidth("97%");
             window.setHeight("95%");
             window.setModal(true);
-            window.setContent(jobsDataEnterView);
+            window.setContent(coursesDataEnterView);
             getUI().addWindow(window);
-            jobsDataEnterView.init(job);
+            coursesDataEnterView.init(course);
 
 
             window.addCloseListener(new Window.CloseListener() {

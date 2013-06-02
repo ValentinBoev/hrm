@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author valik
  */
-public class JobDataEnterVIew extends VerticalLayout implements Button.ClickListener {
+public class JobDataEnterView extends VerticalLayout implements Button.ClickListener {
     
     private Button saveBtn;
     private TextField jobTitle;
@@ -66,7 +66,7 @@ public class JobDataEnterVIew extends VerticalLayout implements Button.ClickList
             ((MyVaadinUI)getUI()).getSessionBean().saveData(job);
             
         } catch (FieldGroup.CommitException ex) {
-            Logger.getLogger(JobDataEnterVIew.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JobDataEnterView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

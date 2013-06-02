@@ -51,12 +51,6 @@ public class SingleUserReportView extends VerticalLayout {
     
     private void prepareList () {
         
-        for (Object o :  list) {
-            System.out.println(o.getClass());
-        }
-        
-        
-
         userListTable = new Table();
         userListTable.setContainerDataSource(data);
         userListTable.setSizeFull();
@@ -65,14 +59,14 @@ public class SingleUserReportView extends VerticalLayout {
         userListTable.setVisibleColumns(new Object[]{
             "id", "firstname", "lastName", "job", 
             "department", "supervisorId", "baseSalary", 
-            "bonus", //"city",
+            "bonus", 
             "employeeData.address", "employeeData.city", "employeeData.zip", "employeeData.mobilePhone",
             "employeeData.homePhone", "employeeData.email", "employeeData.gender"
         });
         userListTable.setColumnHeaders(new String[]{
             "id", "First name", "Last name", "Job Title", 
             "Department Name", "Supervisor", "Base Salary", 
-            "Bonus", //"address",
+            "Bonus", 
             "Adress", "City", "zip", "Mobile Phone",
             "Home Phone", "Email", "Gender"
         });
